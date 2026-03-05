@@ -36,6 +36,9 @@
   --sage:        #5C7A4E;
   --sage-light:  #8FAD7F;
 
+  --blue:        #0E7490;
+  --blue-glow:   rgba(14, 116, 144, 0.1);
+
   --border:      rgba(100, 75, 45, 0.15);
   --border-strong: rgba(100, 75, 45, 0.3);
 
@@ -201,7 +204,7 @@ body::after {
 .platform-pill .ico { font-size: 1rem; }
 
 /* ════════════════════════════════════════
-   NAVBAR — Sticky, Brand + Links + Hamburger
+   NAVBAR
 ════════════════════════════════════════ */
 .nav-wrap {
   position: sticky;
@@ -224,7 +227,6 @@ body::after {
   gap: 8px;
 }
 
-/* Brand */
 .nav-brand {
   display: flex;
   align-items: center;
@@ -259,7 +261,6 @@ body::after {
   margin-left: 2px;
 }
 
-/* Desktop links */
 .nav-links {
   display: flex;
   align-items: center;
@@ -299,7 +300,6 @@ body::after {
 }
 .nav-link.active .num { color: var(--green-light); }
 
-/* Hamburger */
 .nav-hamburger {
   display: none;
   flex-direction: column;
@@ -328,7 +328,6 @@ body::after {
 .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Mobile drawer */
 .nav-drawer {
   display: none;
   position: absolute;
@@ -421,6 +420,7 @@ main {
 .n-amber  { color: var(--amber); border-color: var(--amber); background: var(--amber-glow); }
 .n-terra  { color: var(--terra); border-color: var(--terra); background: var(--terra-glow); }
 .n-sage   { color: var(--sage);  border-color: var(--sage);  background: rgba(92,122,78,.1); }
+.n-blue   { color: var(--blue);  border-color: var(--blue);  background: var(--blue-glow); }
 
 .section-tag {
   font-size: 0.7rem;
@@ -736,6 +736,7 @@ table.styled tbody tr:hover { background: var(--bg-elevated); }
 .box.tip   { background: var(--green-glow); border: 1px solid rgba(45,90,39,.2); }
 .box.warn  { background: var(--amber-glow); border: 1px solid rgba(200,130,10,.2); }
 .box.ok    { background: rgba(45,90,39,.06); border: 1px solid rgba(45,90,39,.18); }
+.box.info  { background: var(--blue-glow);  border: 1px solid rgba(14,116,144,.2); }
 code.ic {
   font-family: 'Fira Code', monospace;
   font-size: 0.8em;
@@ -938,22 +939,17 @@ footer a:hover { text-decoration: underline; }
 .tq-mistral  { color: #0E7490; }
 
 /* ════════════════════════════════════════
-   RESPONSIVE — Mobile First
+   RESPONSIVE
 ════════════════════════════════════════ */
 @media (max-width: 768px) {
-  /* Hide desktop nav links, show hamburger */
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
   .nav-brand-year { display: none; }
-
   .hero h1 { letter-spacing: -1px; }
   .hero-eyebrow { font-size: 0.65rem; text-align: center; }
-
   .model-card-top { flex-direction: column; gap: 8px; }
   .model-card:hover { transform: none; }
-
   .back-top { bottom: 16px; right: 16px; width: 40px; height: 40px; }
-
   .step { gap: 12px; }
   .step-dot { width: 26px; height: 26px; font-size: 0.65rem; }
 }
@@ -987,9 +983,9 @@ footer a:hover { text-decoration: underline; }
   <h1>Getting Started<br>with <em>Ollama</em></h1>
   <p class="tagline">Install, configure, and master local LLMs &mdash; from your first <code style="font-family:Fira Code,monospace;font-size:.9em;color:var(--green)">ollama run</code> to production-ready API integrations.</p>
   <div class="hero-platforms">
+    <span class="platform-pill"><span class="ico">🪟</span> Windows (Native)</span>
     <span class="platform-pill"><span class="ico">🐧</span> Linux / Ubuntu</span>
     <span class="platform-pill"><span class="ico">🍎</span> macOS</span>
-    <span class="platform-pill"><span class="ico">🪟</span> Windows WSL2</span>
     <span class="platform-pill"><span class="ico">🦙</span> 5 Models Covered</span>
     <span class="platform-pill"><span class="ico">🐍</span> Python &amp; REST API</span>
   </div>
@@ -998,14 +994,10 @@ footer a:hover { text-decoration: underline; }
 <!-- ══════════════════ NAV ══════════════════ -->
 <nav class="nav-wrap" id="siteNav">
   <div class="nav-container">
-
-    <!-- Brand -->
     <a href="#" class="nav-brand" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
       <div class="nav-brand-icon">🦙</div>
       <span class="nav-brand-text">Ollama Guide <span class="nav-brand-year">2026</span></span>
     </a>
-
-    <!-- Desktop links -->
     <div class="nav-links" id="desktopLinks">
       <a href="#prerequisites" class="nav-link"><span class="num">01</span> Prerequisites</a>
       <a href="#installation"  class="nav-link"><span class="num">02</span> Installation</a>
@@ -1016,17 +1008,10 @@ footer a:hover { text-decoration: underline; }
       <a href="#api"           class="nav-link"><span class="num">07</span> API</a>
       <a href="#troubleshoot"  class="nav-link"><span class="num">08</span> Troubleshoot</a>
     </div>
-
-    <!-- Hamburger button -->
     <button class="nav-hamburger" id="hamburgerBtn" aria-label="Toggle navigation" aria-expanded="false">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </button>
-
   </div>
-
-  <!-- Mobile drawer -->
   <div class="nav-drawer" id="navDrawer" role="navigation" aria-label="Mobile navigation">
     <a href="#prerequisites" class="nav-drawer-link"><span class="num">01</span> Prerequisites</a>
     <a href="#installation"  class="nav-drawer-link"><span class="num">02</span> Installation</a>
@@ -1062,10 +1047,10 @@ footer a:hover { text-decoration: underline; }
           <tbody>
             <tr><td>RAM</td><td>8 GB</td><td>16 GB+</td></tr>
             <tr><td>Disk Space</td><td>12 GB free</td><td>50 GB+ free</td></tr>
+            <tr><td>OS (Windows)</td><td>Windows 10 (1903+)</td><td>Windows 11</td></tr>
             <tr><td>OS (Linux)</td><td>Ubuntu 20.04+</td><td>Ubuntu 22.04 / 24.04</td></tr>
             <tr><td>OS (macOS)</td><td>macOS 12+</td><td>macOS 14+ (Apple Silicon)</td></tr>
-            <tr><td>OS (Windows)</td><td>Windows 10+</td><td>Windows 11 with WSL2</td></tr>
-            <tr><td>GPU (Optional)</td><td>NVIDIA 6 GB VRAM</td><td>NVIDIA 8 GB+ / Apple M-series</td></tr>
+            <tr><td>GPU (Optional)</td><td>NVIDIA 6 GB / AMD Radeon</td><td>NVIDIA 8 GB+ / Apple M-series</td></tr>
           </tbody>
         </table>
       </div>
@@ -1078,12 +1063,31 @@ footer a:hover { text-decoration: underline; }
       </div>
 
       <div class="tab-strip" data-group="prereq">
-        <button class="tab-btn active" data-os="linux">Linux / Ubuntu</button>
+        <button class="tab-btn active" data-os="win">Windows</button>
+        <button class="tab-btn" data-os="linux">Linux / Ubuntu</button>
         <button class="tab-btn" data-os="macos">macOS</button>
-        <button class="tab-btn" data-os="win">Windows (WSL)</button>
       </div>
 
-      <div class="os-panel active" data-group="prereq" data-os="linux">
+      <div class="os-panel active" data-group="prereq" data-os="win">
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">PowerShell</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="c"># Check your Windows version (must be 10 1903+ or 11)</span>
+<span class="kw">winver</span>
+
+<span class="c"># Ensure Windows is updated via Settings → Windows Update</span>
+<span class="c"># No additional package managers needed — Ollama has a</span>
+<span class="c"># native .exe installer that works without Admin rights</span>
+
+<span class="c"># Optional: Install Windows Terminal for a better CLI experience</span>
+<span class="kw">winget</span> install Microsoft.WindowsTerminal</pre></div>
+        </div>
+        <div class="box tip">
+          <span class="ico">🪟</span>
+          <div><strong>No WSL needed!</strong> Ollama runs natively on Windows 10/11. The installer is a simple <code class="ic">.exe</code> that doesn't require Administrator privileges. It auto-starts in your system tray.</div>
+        </div>
+      </div>
+
+      <div class="os-panel" data-group="prereq" data-os="linux">
         <div class="code-block">
           <div class="code-head"><span class="code-lang">Bash &mdash; Terminal</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
           <div class="code-body"><pre><span class="c"># Update package lists and upgrade installed packages</span>
@@ -1094,6 +1098,10 @@ footer a:hover { text-decoration: underline; }
 
 <span class="c"># Verify curl is installed</span>
 <span class="kw">curl</span> <span class="fl">--version</span></pre></div>
+        </div>
+        <div class="box tip">
+          <span class="ico">💡</span>
+          <div><strong>Why <code class="ic">sudo</code>?</strong> Many install commands need root privileges to write to system directories. The <code class="ic">sudo</code> prefix temporarily elevates your permissions and will prompt for your password.</div>
         </div>
       </div>
 
@@ -1111,26 +1119,6 @@ footer a:hover { text-decoration: underline; }
 <span class="kw">sw_vers</span></pre></div>
         </div>
       </div>
-
-      <div class="os-panel" data-group="prereq" data-os="win">
-        <div class="code-block">
-          <div class="code-head"><span class="code-lang">PowerShell &mdash; Admin</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
-          <div class="code-body"><pre><span class="c"># Enable WSL2 — run PowerShell as Administrator</span>
-<span class="kw">wsl</span> <span class="fl">--install</span>
-
-<span class="c"># After reboot, set WSL2 as default</span>
-<span class="kw">wsl</span> <span class="fl">--set-default-version</span> 2
-
-<span class="c"># Install Ubuntu from Microsoft Store, then inside WSL:</span>
-<span class="kw">sudo</span> apt update && <span class="kw">sudo</span> apt upgrade <span class="fl">-y</span>
-<span class="kw">sudo</span> apt install <span class="fl">-y</span> curl wget git</pre></div>
-        </div>
-      </div>
-
-      <div class="box tip">
-        <span class="ico">💡</span>
-        <div><strong>Why <code class="ic">sudo</code>?</strong> Many install commands need root privileges to write to system directories. The <code class="ic">sudo</code> prefix temporarily elevates your permissions and will prompt for your password.</div>
-      </div>
     </div>
   </section>
 
@@ -1143,15 +1131,115 @@ footer a:hover { text-decoration: underline; }
       <span class="section-tag">Setup</span>
     </div>
     <h2 class="section-title">Install Ollama</h2>
-    <p class="section-sub">One-line installer for Linux/WSL, simple download for macOS. Choose your platform below.</p>
+    <p class="section-sub">Ollama runs natively on all three platforms &mdash; no virtual machines required. Pick your OS below.</p>
 
     <div class="tab-strip" data-group="install">
-      <button class="tab-btn active" data-os="linux">Linux / Ubuntu / WSL</button>
-      <button class="tab-btn" data-os="macos">macOS</button>
+      <button class="tab-btn active" data-os="win">🪟 Windows (Native)</button>
+      <button class="tab-btn" data-os="linux">🐧 Linux / Ubuntu</button>
+      <button class="tab-btn" data-os="macos">🍎 macOS</button>
     </div>
 
-    <!-- Linux -->
-    <div class="os-panel active" data-group="install" data-os="linux">
+    <!-- ═══ WINDOWS NATIVE ═══ -->
+    <div class="os-panel active" data-group="install" data-os="win">
+      <div class="box info">
+        <span class="ico">🎯</span>
+        <div><strong>Native Windows &mdash; No WSL required.</strong> Ollama installs as a native Windows application with full NVIDIA and AMD Radeon GPU support. It runs in the background via system tray, and the CLI works in CMD, PowerShell, or Windows Terminal.</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-track"><div class="step-dot on">1</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-h">Download the Installer</div>
+            <div class="step-p">Grab <code class="ic">OllamaSetup.exe</code> from the official site. No admin rights needed.</div>
+            <div class="code-block">
+              <div class="code-head"><span class="code-lang">Browser or PowerShell</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+              <div class="code-body"><pre><span class="c"># Option A: Open in browser</span>
+<span class="st">https://ollama.com/download/windows</span>
+
+<span class="c"># Option B: Download via PowerShell</span>
+<span class="kw">Invoke-WebRequest</span> <span class="fl">-Uri</span> <span class="st">"https://ollama.com/download/OllamaSetup.exe"</span> <span class="fl">-OutFile</span> <span class="st">"OllamaSetup.exe"</span></pre></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-track"><div class="step-dot on">2</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-h">Run the Installer</div>
+            <div class="step-p">Double-click <code class="ic">OllamaSetup.exe</code> and click <strong>Install</strong>. The setup takes about 30 seconds. After installation, you'll see the 🦙 Ollama icon appear in your Windows system tray (bottom-right corner). The server starts automatically.</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-track"><div class="step-dot on">3</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-h">Verify in Terminal</div>
+            <div class="step-p">Open <strong>Command Prompt</strong>, <strong>PowerShell</strong>, or <strong>Windows Terminal</strong> and run:</div>
+            <div class="code-block">
+              <div class="code-head"><span class="code-lang">CMD / PowerShell / Windows Terminal</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+              <div class="code-body"><pre><span class="c"># Check Ollama version</span>
+<span class="kw">ollama</span> <span class="fl">--version</span>
+<span class="ou"># Expected: ollama version 0.x.x</span>
+
+<span class="c"># Test the server is responding</span>
+<span class="kw">curl</span> http://localhost:11434
+<span class="ou"># Expected: Ollama is running</span></pre></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-track"><div class="step-dot on">4</div></div>
+          <div class="step-body">
+            <div class="step-h">Run Your First Model!</div>
+            <div class="step-p">That's it — you're ready. Pull and run a model right away:</div>
+            <div class="code-block">
+              <div class="code-head"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+              <div class="code-body"><pre><span class="kw">ollama</span> run llama3.2
+<span class="ou"># Downloads the model (~2 GB) then opens interactive chat</span>
+<span class="pr">>>> </span><span class="st">Hello! Tell me about yourself.</span></pre></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box ok">
+        <span class="ico">✅</span>
+        <div><strong>Health Check</strong> &mdash; Open <code class="ic">http://localhost:11434</code> in your browser. You should see <em>"Ollama is running"</em>. The API and CLI both use port 11434.</div>
+      </div>
+
+      <div class="accordion">
+        <button class="accordion-trigger" onclick="toggleAcc(this)">
+          <span>📂 Windows File Locations &amp; Uninstall</span>
+          <span class="accordion-icon">▼</span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-inner">
+            <p style="color:var(--ink-3);font-size:.86rem;margin-bottom:10px;">Ollama stores files in these Windows locations. Press <kbd style="font-family:'Fira Code',monospace;font-size:.8em;padding:2px 6px;background:var(--bg-elevated);border:1px solid var(--border-strong);border-radius:3px;">Win+R</kbd> and paste these paths:</p>
+            <div class="tbl-wrap">
+              <table class="styled">
+                <thead><tr><th>Path</th><th>Contains</th></tr></thead>
+                <tbody>
+                  <tr><td>%LOCALAPPDATA%\Ollama</td><td>Logs (app.log, server.log) and downloaded updates</td></tr>
+                  <tr><td>%LOCALAPPDATA%\Programs\Ollama</td><td>Binaries (auto-added to your user PATH)</td></tr>
+                  <tr><td>%HOMEPATH%\.ollama</td><td>Downloaded models and configuration</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="color:var(--ink-3);font-size:.86rem;margin-top:12px;">To <strong>change model storage location</strong>, set the <code class="ic">OLLAMA_MODELS</code> environment variable via Windows Settings → "Environment variables". To <strong>uninstall</strong>, use Settings → Add or remove programs → Ollama.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="box tip">
+        <span class="ico">⚡</span>
+        <div><strong>GPU Acceleration</strong> &mdash; Ollama automatically detects and uses NVIDIA (CUDA) and AMD Radeon GPUs on Windows. No additional driver setup needed beyond having your standard GPU drivers installed.</div>
+      </div>
+    </div>
+
+    <!-- ═══ LINUX ═══ -->
+    <div class="os-panel" data-group="install" data-os="linux">
       <div class="steps">
         <div class="step">
           <div class="step-track"><div class="step-dot on">1</div><div class="step-line"></div></div>
@@ -1203,7 +1291,7 @@ footer a:hover { text-decoration: underline; }
       </div>
     </div>
 
-    <!-- macOS -->
+    <!-- ═══ macOS ═══ -->
     <div class="os-panel" data-group="install" data-os="macos">
       <div class="steps">
         <div class="step">
@@ -1277,7 +1365,7 @@ footer a:hover { text-decoration: underline; }
         <div class="step-body">
           <div class="step-h">Authenticate via CLI</div>
           <div class="code-block">
-            <div class="code-head"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-head"><span class="code-lang">Any Terminal (Windows / Linux / macOS)</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
             <div class="code-body"><pre><span class="c"># Opens a browser window for OAuth authentication</span>
 <span class="kw">ollama</span> signin</pre></div>
           </div>
@@ -1308,7 +1396,12 @@ footer a:hover { text-decoration: underline; }
       <span class="section-tag">Command Line</span>
     </div>
     <h2 class="section-title">CLI Deep Dive</h2>
-    <p class="section-sub">Every Ollama command you'll ever need &mdash; from model management to server control and interactive sessions.</p>
+    <p class="section-sub">Every Ollama command you'll ever need &mdash; identical across Windows, macOS, and Linux.</p>
+
+    <div class="box info">
+      <span class="ico">🔄</span>
+      <div><strong>Same CLI everywhere.</strong> All <code class="ic">ollama</code> commands work identically in Windows CMD/PowerShell, macOS Terminal, and Linux bash. The examples below work on all platforms.</div>
+    </div>
 
     <div class="card">
       <div class="card-head">
@@ -1346,25 +1439,24 @@ footer a:hover { text-decoration: underline; }
       <div class="accordion-body">
         <div class="accordion-inner">
           <div class="code-block">
-            <div class="code-head"><span class="code-lang">Bash &mdash; Hands-On</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-head"><span class="code-lang">Any Terminal (Works on All OS)</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
             <div class="code-body"><pre><span class="c"># Step 1: Ensure the server is running</span>
+<span class="c"># Windows: It auto-starts via system tray</span>
+<span class="c"># Linux:   sudo systemctl start ollama</span>
+<span class="c"># macOS:   Open the Ollama app, or run:</span>
 <span class="kw">ollama</span> serve &
-<span class="c"># (On Linux with systemd it's already running)</span>
 
-<span class="c"># Step 2: Choose a model and pull it</span>
-<span class="c">#   Popular models from ollama.com/library:</span>
-<span class="kw">ollama</span> pull llama3.2:1b        <span class="c"># Meta Llama 3.2  — ~1.3 GB (lightweight)</span>
-<span class="kw">ollama</span> pull gemma3:4b          <span class="c"># Google Gemma 3  — ~2.5 GB (multimodal)</span>
-<span class="kw">ollama</span> pull deepseek-r1:8b     <span class="c"># DeepSeek R1     — ~4.9 GB (reasoning)</span>
-<span class="kw">ollama</span> pull qwen3:7b           <span class="c"># Qwen 3          — ~4.4 GB (multilingual)</span>
-<span class="kw">ollama</span> pull mistral            <span class="c"># Mistral 7B      — ~4.1 GB (fast &amp; efficient)</span>
-<span class="kw">ollama</span> pull qwen2.5-coder:7b   <span class="c"># Qwen 2.5 Coder  — ~4.4 GB (code-focused)</span>
+<span class="c"># Step 2: Pull some models</span>
+<span class="kw">ollama</span> pull llama3.2:1b        <span class="c"># Meta Llama 3.2  — ~1.3 GB</span>
+<span class="kw">ollama</span> pull gemma3:4b          <span class="c"># Google Gemma 3  — ~2.5 GB</span>
+<span class="kw">ollama</span> pull deepseek-r1:8b     <span class="c"># DeepSeek R1     — ~4.9 GB</span>
+<span class="kw">ollama</span> pull qwen3:7b           <span class="c"># Qwen 3          — ~4.4 GB</span>
+<span class="kw">ollama</span> pull mistral            <span class="c"># Mistral 7B      — ~4.1 GB</span>
 
 <span class="c"># Step 3: List downloaded models</span>
 <span class="kw">ollama</span> list
-<span class="ou"># NAME                   ID            SIZE      MODIFIED</span>
-<span class="ou"># llama3.2:1b            a80c4f17...   1.3 GB    just now</span>
-<span class="ou"># gemma3:4b              c0494fe7...   2.5 GB    2 min ago</span>
+<span class="ou"># NAME              ID            SIZE      MODIFIED</span>
+<span class="ou"># llama3.2:1b       a80c4f17...   1.3 GB    just now</span>
 
 <span class="c"># Step 4: Start an interactive session</span>
 <span class="kw">ollama</span> run llama3.2:1b
@@ -1372,8 +1464,6 @@ footer a:hover { text-decoration: underline; }
 
 <span class="c"># Step 5: In another terminal — check what's loaded</span>
 <span class="kw">ollama</span> ps
-<span class="ou"># NAME           ID            SIZE     PROCESSOR   UNTIL</span>
-<span class="ou"># llama3.2:1b    a80c4f17...   1.3 GB   100% GPU    4 minutes</span>
 
 <span class="c"># Step 6: Show model details</span>
 <span class="kw">ollama</span> show llama3.2:1b
@@ -1419,8 +1509,24 @@ footer a:hover { text-decoration: underline; }
       </button>
       <div class="accordion-body">
         <div class="accordion-inner">
+
+          <p style="color:var(--ink-2);font-size:.9rem;font-weight:700;margin-bottom:10px;">🪟 Windows</p>
           <div class="code-block">
-            <div class="code-head"><span class="code-lang">Linux &mdash; systemd service override</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-head"><span class="code-lang">PowerShell or CMD</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="c"># Set environment variables for your user account</span>
+<span class="kw">setx</span> OLLAMA_HOST <span class="st">"0.0.0.0"</span>
+<span class="kw">setx</span> OLLAMA_ORIGINS <span class="st">"*"</span>
+<span class="kw">setx</span> OLLAMA_MODELS <span class="st">"D:\ollama-models"</span>  <span class="c"># Optional: change model storage</span>
+
+<span class="c"># Or via GUI: Settings → search "environment variables"</span>
+<span class="c"># → Edit environment variables for your account</span>
+
+<span class="c"># After setting, quit Ollama from system tray and relaunch</span></pre></div>
+          </div>
+
+          <p style="color:var(--ink-2);font-size:.9rem;font-weight:700;margin:20px 0 10px;">🐧 Linux &mdash; systemd service override</p>
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">Bash</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
             <div class="code-body"><pre><span class="c"># Edit the Ollama service configuration</span>
 <span class="kw">sudo</span> systemctl edit ollama
 
@@ -1434,8 +1540,10 @@ Environment=<span class="st">"OLLAMA_NUM_PARALLEL=2"</span>
 <span class="kw">sudo</span> systemctl daemon-reload
 <span class="kw">sudo</span> systemctl restart ollama</pre></div>
           </div>
+
+          <p style="color:var(--ink-2);font-size:.9rem;font-weight:700;margin:20px 0 10px;">🍎 macOS &mdash; launchctl</p>
           <div class="code-block">
-            <div class="code-head"><span class="code-lang">macOS &mdash; launchctl</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-head"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
             <div class="code-body"><pre><span class="kw">launchctl</span> setenv OLLAMA_HOST <span class="st">"0.0.0.0"</span>
 <span class="kw">launchctl</span> setenv OLLAMA_ORIGINS <span class="st">"*"</span>
 <span class="c"># Then restart the Ollama app from menu bar</span></pre></div>
@@ -1456,12 +1564,12 @@ Environment=<span class="st">"OLLAMA_NUM_PARALLEL=2"</span>
             <table class="styled">
               <thead><tr><th>Category</th><th>Tools</th><th>Description</th></tr></thead>
               <tbody>
-                <tr><td>Coding Agents</td><td>Claude Code, Codex, OpenCode, Droid, Goose, Pi</td><td>AI agents that read, modify, and execute code in your projects</td></tr>
+                <tr><td>Coding Agents</td><td>Claude Code, Codex, OpenCode, Droid, Goose, Pi</td><td>AI agents that read, modify, and execute code</td></tr>
                 <tr><td>Assistants</td><td>OpenClaw</td><td>General-purpose AI assistant</td></tr>
-                <tr><td>IDEs &amp; Editors</td><td>VS Code, Cline, Roo Code, JetBrains, Xcode, Zed</td><td>Native integrations for popular development environments</td></tr>
+                <tr><td>IDEs</td><td>VS Code, Cline, Roo Code, JetBrains, Xcode, Zed</td><td>Native IDE integrations</td></tr>
                 <tr><td>Chat &amp; RAG</td><td>Onyx</td><td>Chat interface with retrieval-augmented generation</td></tr>
-                <tr><td>Automation</td><td>n8n</td><td>Workflow automation with AI integration</td></tr>
-                <tr><td>Notebooks</td><td>marimo</td><td>Interactive computing environments with AI capabilities</td></tr>
+                <tr><td>Automation</td><td>n8n</td><td>Workflow automation with AI</td></tr>
+                <tr><td>Notebooks</td><td>marimo</td><td>Interactive computing with AI</td></tr>
               </tbody>
             </table>
           </div>
@@ -1479,11 +1587,11 @@ Environment=<span class="st">"OLLAMA_NUM_PARALLEL=2"</span>
       <span class="section-tag">Models</span>
     </div>
     <h2 class="section-title">Install &amp; Run Models</h2>
-    <p class="section-sub">Five powerful open-source LLMs, each with install commands and size guidance. Check free space with <code class="ic">df -h</code> first.</p>
+    <p class="section-sub">Five powerful open-source LLMs with install commands. These commands work identically on Windows, Linux, and macOS.</p>
 
     <div class="box warn">
       <span class="ico">📦</span>
-      <div><strong>Storage Note:</strong> Models range from ~1.3 GB to ~4.9 GB each. Ensure you have sufficient free disk space before pulling.</div>
+      <div><strong>Storage Note:</strong> Models range from ~1.3 GB to ~4.9 GB each. Check free space first: <code class="ic">df -h</code> (Linux/macOS) or <code class="ic">dir C:\</code> (Windows).</div>
     </div>
 
     <!-- Llama 3.2 -->
@@ -1491,11 +1599,7 @@ Environment=<span class="st">"OLLAMA_NUM_PARALLEL=2"</span>
       <div class="model-card-top">
         <div>
           <div class="model-name accent-llama">🦙 Llama 3.2</div>
-          <div class="model-chips">
-            <span class="chip">Meta AI</span>
-            <span class="chip">1B / 3B</span>
-            <span class="chip">General Purpose</span>
-          </div>
+          <div class="model-chips"><span class="chip">Meta AI</span><span class="chip">1B / 3B</span><span class="chip">General Purpose</span></div>
         </div>
       </div>
       <div class="model-body">
@@ -1520,11 +1624,7 @@ Environment=<span class="st">"OLLAMA_NUM_PARALLEL=2"</span>
       <div class="model-card-top">
         <div>
           <div class="model-name accent-deepseek">🧠 DeepSeek R1</div>
-          <div class="model-chips">
-            <span class="chip">DeepSeek AI</span>
-            <span class="chip">8B / 14B</span>
-            <span class="chip">Chain-of-Thought</span>
-          </div>
+          <div class="model-chips"><span class="chip">DeepSeek AI</span><span class="chip">8B / 14B</span><span class="chip">Chain-of-Thought</span></div>
         </div>
       </div>
       <div class="model-body">
@@ -1546,11 +1646,7 @@ Environment=<span class="st">"OLLAMA_NUM_PARALLEL=2"</span>
       <div class="model-card-top">
         <div>
           <div class="model-name accent-gemma">💎 Gemma 3</div>
-          <div class="model-chips">
-            <span class="chip">Google</span>
-            <span class="chip">4B / 12B</span>
-            <span class="chip">Multimodal</span>
-          </div>
+          <div class="model-chips"><span class="chip">Google</span><span class="chip">4B / 12B</span><span class="chip">Multimodal</span></div>
         </div>
       </div>
       <div class="model-body">
@@ -1571,11 +1667,7 @@ Environment=<span class="st">"OLLAMA_NUM_PARALLEL=2"</span>
       <div class="model-card-top">
         <div>
           <div class="model-name accent-qwen">🌐 Qwen 3</div>
-          <div class="model-chips">
-            <span class="chip">Alibaba</span>
-            <span class="chip">7B / 14B / 32B</span>
-            <span class="chip">Multilingual</span>
-          </div>
+          <div class="model-chips"><span class="chip">Alibaba</span><span class="chip">7B / 14B / 32B</span><span class="chip">Multilingual</span></div>
         </div>
       </div>
       <div class="model-body">
@@ -1596,11 +1688,7 @@ Environment=<span class="st">"OLLAMA_NUM_PARALLEL=2"</span>
       <div class="model-card-top">
         <div>
           <div class="model-name accent-mistral">🌊 Mistral</div>
-          <div class="model-chips">
-            <span class="chip">Mistral AI</span>
-            <span class="chip">7B</span>
-            <span class="chip">Fast &amp; Efficient</span>
-          </div>
+          <div class="model-chips"><span class="chip">Mistral AI</span><span class="chip">7B</span><span class="chip">Fast &amp; Efficient</span></div>
         </div>
       </div>
       <div class="model-body">
@@ -1620,12 +1708,8 @@ Environment=<span class="st">"OLLAMA_NUM_PARALLEL=2"</span>
       <span class="ico">📋</span>
       <div><strong>Pull all 5 models in one command:</strong>
         <div class="code-block" style="margin-top:12px;margin-bottom:0;">
-          <div class="code-head"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
-          <div class="code-body"><pre><span class="kw">ollama</span> pull llama3.2 && \
-<span class="kw">ollama</span> pull deepseek-r1:8b && \
-<span class="kw">ollama</span> pull gemma3:4b && \
-<span class="kw">ollama</span> pull qwen3:7b && \
-<span class="kw">ollama</span> pull mistral</pre></div>
+          <div class="code-head"><span class="code-lang">Terminal (any OS)</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="kw">ollama</span> pull llama3.2 && <span class="kw">ollama</span> pull deepseek-r1:8b && <span class="kw">ollama</span> pull gemma3:4b && <span class="kw">ollama</span> pull qwen3:7b && <span class="kw">ollama</span> pull mistral</pre></div>
         </div>
       </div>
     </div>
@@ -1644,26 +1728,15 @@ Environment=<span class="st">"OLLAMA_NUM_PARALLEL=2"</span>
 
     <!-- Test: Llama 3.2 -->
     <div class="model-card">
-      <div class="model-card-top">
-        <div class="model-name accent-llama" style="font-size:1.05rem;">🦙 Testing Llama 3.2</div>
-      </div>
+      <div class="model-card-top"><div class="model-name accent-llama" style="font-size:1.05rem;">🦙 Testing Llama 3.2</div></div>
       <div class="model-body">
         <div class="code-block">
           <div class="code-head"><span class="code-lang">Launch</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
           <div class="code-body"><pre><span class="kw">ollama</span> run llama3.2</pre></div>
         </div>
-        <div class="test-q bl-llama">
-          <div class="test-q-num tq-llama">Question 1 &mdash; Development</div>
-          <div class="test-q-text">Explain the SOLID principles in software engineering with a real-world Python example for each principle.</div>
-        </div>
-        <div class="test-q bl-llama">
-          <div class="test-q-num tq-llama">Question 2 &mdash; AI Agents</div>
-          <div class="test-q-text">What is the ReAct (Reasoning + Acting) pattern in AI agents? How does it differ from simple chain-of-thought prompting? Provide a pseudocode example.</div>
-        </div>
-        <div class="test-q bl-llama">
-          <div class="test-q-num tq-llama">Question 3 &mdash; LLMs</div>
-          <div class="test-q-text">Explain the transformer attention mechanism. What are Query, Key, and Value vectors, and how does multi-head attention improve over single-head attention?</div>
-        </div>
+        <div class="test-q bl-llama"><div class="test-q-num tq-llama">Question 1 &mdash; Development</div><div class="test-q-text">Explain the SOLID principles in software engineering with a real-world Python example for each principle.</div></div>
+        <div class="test-q bl-llama"><div class="test-q-num tq-llama">Question 2 &mdash; AI Agents</div><div class="test-q-text">What is the ReAct (Reasoning + Acting) pattern in AI agents? How does it differ from simple chain-of-thought prompting? Provide a pseudocode example.</div></div>
+        <div class="test-q bl-llama"><div class="test-q-num tq-llama">Question 3 &mdash; LLMs</div><div class="test-q-text">Explain the transformer attention mechanism. What are Query, Key, and Value vectors, and how does multi-head attention improve over single-head attention?</div></div>
         <div class="code-block">
           <div class="code-head"><span class="code-lang">Non-Interactive One-Liners</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
           <div class="code-body"><pre><span class="kw">ollama</span> run llama3.2 <span class="st">"Explain the SOLID principles with Python examples"</span>
@@ -1675,26 +1748,15 @@ Environment=<span class="st">"OLLAMA_NUM_PARALLEL=2"</span>
 
     <!-- Test: DeepSeek R1 -->
     <div class="model-card">
-      <div class="model-card-top">
-        <div class="model-name accent-deepseek" style="font-size:1.05rem;">🧠 Testing DeepSeek R1</div>
-      </div>
+      <div class="model-card-top"><div class="model-name accent-deepseek" style="font-size:1.05rem;">🧠 Testing DeepSeek R1</div></div>
       <div class="model-body">
         <div class="code-block">
           <div class="code-head"><span class="code-lang">Launch</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
           <div class="code-body"><pre><span class="kw">ollama</span> run deepseek-r1:8b</pre></div>
         </div>
-        <div class="test-q bl-deepseek">
-          <div class="test-q-num tq-deepseek">Question 1 &mdash; Development</div>
-          <div class="test-q-text">Design a distributed task queue system (like Celery). What components are needed, how do you handle failures, and what are the trade-offs between at-least-once vs exactly-once delivery?</div>
-        </div>
-        <div class="test-q bl-deepseek">
-          <div class="test-q-num tq-deepseek">Question 2 &mdash; AI Agents</div>
-          <div class="test-q-text">How would you implement a tool-using AI agent that can search the web, execute code, and manage files? Describe the architecture with a state machine diagram.</div>
-        </div>
-        <div class="test-q bl-deepseek">
-          <div class="test-q-num tq-deepseek">Question 3 &mdash; LLMs</div>
-          <div class="test-q-text">Compare RAG (Retrieval Augmented Generation) vs fine-tuning for adding domain knowledge to an LLM. When should you use each approach? Provide concrete scenarios.</div>
-        </div>
+        <div class="test-q bl-deepseek"><div class="test-q-num tq-deepseek">Question 1 &mdash; Development</div><div class="test-q-text">Design a distributed task queue system (like Celery). What components are needed, how do you handle failures, and what are the trade-offs between at-least-once vs exactly-once delivery?</div></div>
+        <div class="test-q bl-deepseek"><div class="test-q-num tq-deepseek">Question 2 &mdash; AI Agents</div><div class="test-q-text">How would you implement a tool-using AI agent that can search the web, execute code, and manage files? Describe the architecture with a state machine diagram.</div></div>
+        <div class="test-q bl-deepseek"><div class="test-q-num tq-deepseek">Question 3 &mdash; LLMs</div><div class="test-q-text">Compare RAG (Retrieval Augmented Generation) vs fine-tuning for adding domain knowledge to an LLM. When should you use each approach? Provide concrete scenarios.</div></div>
         <div class="code-block">
           <div class="code-head"><span class="code-lang">Non-Interactive One-Liners</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
           <div class="code-body"><pre><span class="kw">ollama</span> run deepseek-r1:8b <span class="st">"Design a distributed task queue system"</span>
@@ -1706,26 +1768,15 @@ Environment=<span class="st">"OLLAMA_NUM_PARALLEL=2"</span>
 
     <!-- Test: Gemma 3 -->
     <div class="model-card">
-      <div class="model-card-top">
-        <div class="model-name accent-gemma" style="font-size:1.05rem;">💎 Testing Gemma 3</div>
-      </div>
+      <div class="model-card-top"><div class="model-name accent-gemma" style="font-size:1.05rem;">💎 Testing Gemma 3</div></div>
       <div class="model-body">
         <div class="code-block">
           <div class="code-head"><span class="code-lang">Launch</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
           <div class="code-body"><pre><span class="kw">ollama</span> run gemma3:4b</pre></div>
         </div>
-        <div class="test-q bl-gemma">
-          <div class="test-q-num tq-gemma">Question 1 &mdash; Development</div>
-          <div class="test-q-text">Explain event-driven architecture. Write a Python example using an event bus pattern with publishers and subscribers for an e-commerce order system.</div>
-        </div>
-        <div class="test-q bl-gemma">
-          <div class="test-q-num tq-gemma">Question 2 &mdash; AI Agents</div>
-          <div class="test-q-text">What are multi-agent systems? Explain how frameworks like CrewAI or AutoGen orchestrate multiple AI agents to collaborate on complex tasks.</div>
-        </div>
-        <div class="test-q bl-gemma">
-          <div class="test-q-num tq-gemma">Question 3 &mdash; LLMs</div>
-          <div class="test-q-text">What is quantization in LLMs? Explain the difference between FP16, INT8, and INT4 quantization and their impact on model quality and performance.</div>
-        </div>
+        <div class="test-q bl-gemma"><div class="test-q-num tq-gemma">Question 1 &mdash; Development</div><div class="test-q-text">Explain event-driven architecture. Write a Python example using an event bus pattern with publishers and subscribers for an e-commerce order system.</div></div>
+        <div class="test-q bl-gemma"><div class="test-q-num tq-gemma">Question 2 &mdash; AI Agents</div><div class="test-q-text">What are multi-agent systems? Explain how frameworks like CrewAI or AutoGen orchestrate multiple AI agents to collaborate on complex tasks.</div></div>
+        <div class="test-q bl-gemma"><div class="test-q-num tq-gemma">Question 3 &mdash; LLMs</div><div class="test-q-text">What is quantization in LLMs? Explain the difference between FP16, INT8, and INT4 quantization and their impact on model quality and performance.</div></div>
         <div class="code-block">
           <div class="code-head"><span class="code-lang">Non-Interactive One-Liners</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
           <div class="code-body"><pre><span class="kw">ollama</span> run gemma3:4b <span class="st">"Explain event-driven architecture with Python code"</span>
@@ -1737,26 +1788,15 @@ Environment=<span class="st">"OLLAMA_NUM_PARALLEL=2"</span>
 
     <!-- Test: Qwen 3 -->
     <div class="model-card">
-      <div class="model-card-top">
-        <div class="model-name accent-qwen" style="font-size:1.05rem;">🌐 Testing Qwen 3</div>
-      </div>
+      <div class="model-card-top"><div class="model-name accent-qwen" style="font-size:1.05rem;">🌐 Testing Qwen 3</div></div>
       <div class="model-body">
         <div class="code-block">
           <div class="code-head"><span class="code-lang">Launch</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
           <div class="code-body"><pre><span class="kw">ollama</span> run qwen3:7b</pre></div>
         </div>
-        <div class="test-q bl-qwen">
-          <div class="test-q-num tq-qwen">Question 1 &mdash; Development</div>
-          <div class="test-q-text">Implement a simple API gateway in Python using FastAPI that handles rate limiting, authentication via JWT tokens, and request routing to microservices.</div>
-        </div>
-        <div class="test-q bl-qwen">
-          <div class="test-q-num tq-qwen">Question 2 &mdash; AI Agents</div>
-          <div class="test-q-text">Explain the concept of "function calling" in LLMs. How do models decide when and how to call external tools? Show the JSON schema approach.</div>
-        </div>
-        <div class="test-q bl-qwen">
-          <div class="test-q-num tq-qwen">Question 3 &mdash; LLMs</div>
-          <div class="test-q-text">What are the key differences between decoder-only (GPT), encoder-only (BERT), and encoder-decoder (T5) transformer architectures? When would you choose each?</div>
-        </div>
+        <div class="test-q bl-qwen"><div class="test-q-num tq-qwen">Question 1 &mdash; Development</div><div class="test-q-text">Implement a simple API gateway in Python using FastAPI that handles rate limiting, authentication via JWT tokens, and request routing to microservices.</div></div>
+        <div class="test-q bl-qwen"><div class="test-q-num tq-qwen">Question 2 &mdash; AI Agents</div><div class="test-q-text">Explain the concept of "function calling" in LLMs. How do models decide when and how to call external tools? Show the JSON schema approach.</div></div>
+        <div class="test-q bl-qwen"><div class="test-q-num tq-qwen">Question 3 &mdash; LLMs</div><div class="test-q-text">What are the key differences between decoder-only (GPT), encoder-only (BERT), and encoder-decoder (T5) transformer architectures? When would you choose each?</div></div>
         <div class="code-block">
           <div class="code-head"><span class="code-lang">Non-Interactive One-Liners</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
           <div class="code-body"><pre><span class="kw">ollama</span> run qwen3:7b <span class="st">"Build an API gateway with FastAPI, JWT, and rate limiting"</span>
@@ -1768,26 +1808,15 @@ Environment=<span class="st">"OLLAMA_NUM_PARALLEL=2"</span>
 
     <!-- Test: Mistral -->
     <div class="model-card">
-      <div class="model-card-top">
-        <div class="model-name accent-mistral" style="font-size:1.05rem;">🌊 Testing Mistral</div>
-      </div>
+      <div class="model-card-top"><div class="model-name accent-mistral" style="font-size:1.05rem;">🌊 Testing Mistral</div></div>
       <div class="model-body">
         <div class="code-block">
           <div class="code-head"><span class="code-lang">Launch</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
           <div class="code-body"><pre><span class="kw">ollama</span> run mistral</pre></div>
         </div>
-        <div class="test-q bl-mistral">
-          <div class="test-q-num tq-mistral">Question 1 &mdash; Development</div>
-          <div class="test-q-text">Explain the CAP theorem with real-world examples. How do databases like PostgreSQL, MongoDB, and Cassandra make different trade-offs?</div>
-        </div>
-        <div class="test-q bl-mistral">
-          <div class="test-q-num tq-mistral">Question 2 &mdash; AI Agents</div>
-          <div class="test-q-text">What is the MCP (Model Context Protocol) by Anthropic? How does it standardize tool use and external service integration for AI agents?</div>
-        </div>
-        <div class="test-q bl-mistral">
-          <div class="test-q-num tq-mistral">Question 3 &mdash; LLMs</div>
-          <div class="test-q-text">Explain the concept of "context window" in LLMs. How do techniques like sliding window attention, sparse attention, and RoPE help extend context length?</div>
-        </div>
+        <div class="test-q bl-mistral"><div class="test-q-num tq-mistral">Question 1 &mdash; Development</div><div class="test-q-text">Explain the CAP theorem with real-world examples. How do databases like PostgreSQL, MongoDB, and Cassandra make different trade-offs?</div></div>
+        <div class="test-q bl-mistral"><div class="test-q-num tq-mistral">Question 2 &mdash; AI Agents</div><div class="test-q-text">What is the MCP (Model Context Protocol) by Anthropic? How does it standardize tool use and external service integration for AI agents?</div></div>
+        <div class="test-q bl-mistral"><div class="test-q-num tq-mistral">Question 3 &mdash; LLMs</div><div class="test-q-text">Explain the concept of "context window" in LLMs. How do techniques like sliding window attention, sparse attention, and RoPE help extend context length?</div></div>
         <div class="code-block">
           <div class="code-head"><span class="code-lang">Non-Interactive One-Liners</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
           <div class="code-body"><pre><span class="kw">ollama</span> run mistral <span class="st">"Explain CAP theorem with database examples"</span>
@@ -1811,13 +1840,13 @@ Environment=<span class="st">"OLLAMA_NUM_PARALLEL=2"</span>
 
     <div class="accordion open">
       <button class="accordion-trigger" onclick="toggleAcc(this)">
-        <span>🌐 REST API &mdash; cURL Examples</span>
+        <span>🌐 REST API &mdash; cURL &amp; PowerShell Examples</span>
         <span class="accordion-icon">▼</span>
       </button>
       <div class="accordion-body">
         <div class="accordion-inner">
           <div class="code-block">
-            <div class="code-head"><span class="code-lang">Chat Completion (Non-Streaming)</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-head"><span class="code-lang">cURL (Linux / macOS / Windows Terminal)</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
             <div class="code-body"><pre><span class="kw">curl</span> http://localhost:11434/api/chat \
   <span class="fl">-d</span> <span class="st">'{
     "model": "llama3.2",
@@ -1828,13 +1857,12 @@ Environment=<span class="st">"OLLAMA_NUM_PARALLEL=2"</span>
   }'</span></pre></div>
           </div>
           <div class="code-block">
-            <div class="code-head"><span class="code-lang">Generate Completion</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
-            <div class="code-body"><pre><span class="kw">curl</span> http://localhost:11434/api/generate \
-  <span class="fl">-d</span> <span class="st">'{
-    "model": "mistral",
-    "prompt": "Write a haiku about programming",
-    "stream": false
-  }'</span></pre></div>
+            <div class="code-head"><span class="code-lang">PowerShell (Windows native)</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="c"># PowerShell equivalent using Invoke-WebRequest</span>
+(<span class="kw">Invoke-WebRequest</span> <span class="fl">-Method</span> POST `
+  <span class="fl">-Body</span> <span class="st">'{"model":"llama3.2", "prompt":"Explain Docker in 3 sentences", "stream": false}'</span> `
+  <span class="fl">-Uri</span> http://localhost:11434/api/generate
+).Content | <span class="kw">ConvertFrom-Json</span></pre></div>
           </div>
           <div class="code-block">
             <div class="code-head"><span class="code-lang">List Local Models</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
@@ -1951,7 +1979,7 @@ console.log(response.message.content);</pre></div>
       <span class="section-tag">Support</span>
     </div>
     <h2 class="section-title">Troubleshooting</h2>
-    <p class="section-sub">Quick fixes for the most common Ollama issues.</p>
+    <p class="section-sub">Quick fixes for the most common Ollama issues across all platforms.</p>
 
     <div class="accordion">
       <button class="accordion-trigger" onclick="toggleAcc(this)">
@@ -1960,16 +1988,18 @@ console.log(response.message.content);</pre></div>
       </button>
       <div class="accordion-body">
         <div class="accordion-inner">
-          <p style="color:var(--ink-3);font-size:.88rem;margin-bottom:12px;">The Ollama server isn't running. Start it:</p>
+          <p style="color:var(--ink-3);font-size:.88rem;margin-bottom:12px;">The Ollama server isn't running. Start it for your platform:</p>
           <div class="code-block">
-            <div class="code-head"><span class="code-lang">Fix</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
-            <div class="code-body"><pre><span class="c"># Linux / WSL</span>
-<span class="kw">sudo</span> systemctl start ollama
-
-<span class="c"># Run manually in foreground (any OS)</span>
+            <div class="code-head"><span class="code-lang">Fix per OS</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="c"># 🪟 Windows — Restart from system tray or Start Menu</span>
+<span class="c"># Right-click the Ollama tray icon → Quit, then relaunch</span>
+<span class="c"># Or run manually:</span>
 <span class="kw">ollama</span> serve
 
-<span class="c"># macOS — open the Ollama app from Applications, or:</span>
+<span class="c"># 🐧 Linux</span>
+<span class="kw">sudo</span> systemctl start ollama
+
+<span class="c"># 🍎 macOS — open the Ollama app from Applications, or:</span>
 <span class="kw">ollama</span> serve</pre></div>
           </div>
         </div>
@@ -1997,7 +2027,8 @@ console.log(response.message.content);</pre></div>
 <span class="kw">nvidia-smi</span>
 
 <span class="c"># Check system RAM</span>
-<span class="kw">free</span> <span class="fl">-h</span></pre></div>
+<span class="kw">free</span> <span class="fl">-h</span>          <span class="c"># Linux / macOS</span>
+<span class="kw">systeminfo</span>        <span class="c"># Windows (look for "Available Physical Memory")</span></pre></div>
           </div>
         </div>
       </div>
@@ -2010,7 +2041,6 @@ console.log(response.message.content);</pre></div>
       </button>
       <div class="accordion-body">
         <div class="accordion-inner">
-          <p style="color:var(--ink-3);font-size:.88rem;margin-bottom:12px;">The model is too large for available RAM/VRAM. Try these solutions:</p>
           <div class="code-block">
             <div class="code-head"><span class="code-lang">Solutions</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
             <div class="code-body"><pre><span class="c"># 1. Stop other running models first</span>
@@ -2038,7 +2068,16 @@ console.log(response.message.content);</pre></div>
       <div class="accordion-body">
         <div class="accordion-inner">
           <div class="code-block">
-            <div class="code-head"><span class="code-lang">Linux / WSL</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-head"><span class="code-lang">🪟 Windows</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="c"># Open log files via Run dialog (Win+R):</span>
+<span class="st">%LOCALAPPDATA%\Ollama\app.log</span>      <span class="c"># GUI app log</span>
+<span class="st">%LOCALAPPDATA%\Ollama\server.log</span>   <span class="c"># Server log</span>
+
+<span class="c"># Or view in PowerShell:</span>
+<span class="kw">Get-Content</span> <span class="st">"$env:LOCALAPPDATA\Ollama\server.log"</span> <span class="fl">-Tail</span> 50</pre></div>
+          </div>
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">🐧 Linux</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
             <div class="code-body"><pre><span class="c"># Stream live logs</span>
 <span class="kw">journalctl</span> <span class="fl">-u</span> ollama.service <span class="fl">-f</span>
 
@@ -2061,7 +2100,7 @@ console.log(response.message.content);</pre></div>
     <div class="footer-brand">🦙 Ollama Guide</div>
     <p>Complete Setup &amp; Implementation Guide &mdash; 2026 Edition</p>
     <p style="margin-top:6px;">Data sourced from <a href="https://ollama.com" target="_blank" rel="noopener">official Ollama documentation</a> and community resources.</p>
-    <p style="margin-top:6px;color:var(--ink-4);font-size:0.72rem;">Built for developers, by developers &mdash; Linux &bull; macOS &bull; Windows WSL2</p>
+    <p style="margin-top:6px;color:var(--ink-4);font-size:0.72rem;">Built for developers, by developers &mdash; Windows &bull; Linux &bull; macOS</p>
   </div>
 </footer>
 
@@ -2104,7 +2143,6 @@ hamburgerBtn.addEventListener('click', () => {
   hamburgerBtn.setAttribute('aria-expanded', isOpen);
 });
 
-// Close drawer when a link is clicked
 navDrawer.querySelectorAll('.nav-drawer-link').forEach(link => {
   link.addEventListener('click', () => {
     navDrawer.classList.remove('open');
