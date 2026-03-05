@@ -1,0 +1,2163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ollama — Complete Setup & Implementation Guide 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400&family=Syne:wght@400;500;600;700;800&family=Fira+Code:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════
+   DESIGN SYSTEM — Warm Craft Editorial
+   Palette: Parchment + Forest Green + Amber
+════════════════════════════════════════ */
+:root {
+  --bg:          #F4EDE4;
+  --bg-card:     #FDFAF6;
+  --bg-code:     #1C2412;
+  --bg-code-alt: #212B17;
+  --bg-elevated: #EDE3D6;
+
+  --ink:         #1A1208;
+  --ink-2:       #3D2E1A;
+  --ink-3:       #7A6248;
+  --ink-4:       #B09A7E;
+
+  --green:       #2D5A27;
+  --green-light: #4A8C41;
+  --green-glow:  rgba(45, 90, 39, 0.12);
+
+  --amber:       #C8820A;
+  --amber-light: #E9A830;
+  --amber-glow:  rgba(200, 130, 10, 0.12);
+
+  --terra:       #B5441E;
+  --terra-glow:  rgba(181, 68, 30, 0.1);
+
+  --sage:        #5C7A4E;
+  --sage-light:  #8FAD7F;
+
+  --border:      rgba(100, 75, 45, 0.15);
+  --border-strong: rgba(100, 75, 45, 0.3);
+
+  --shadow-sm:   0 2px 8px rgba(30, 15, 5, 0.08);
+  --shadow-md:   0 6px 24px rgba(30, 15, 5, 0.1);
+  --shadow-lg:   0 16px 48px rgba(30, 15, 5, 0.12);
+
+  --radius:      14px;
+  --radius-sm:   8px;
+  --radius-xs:   5px;
+
+  --nav-height:  56px;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink-4) var(--bg);
+}
+
+body {
+  font-family: 'Syne', sans-serif;
+  background-color: var(--bg);
+  color: var(--ink);
+  line-height: 1.7;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ─── Neural Network BG Pattern ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cdefs%3E%3Cstyle%3E.node%7Bfill:none;stroke:%23986B3D;stroke-width:0.8;opacity:0.18%7D.dot%7Bfill:%23986B3D;opacity:0.22%7D%3C/style%3E%3C/defs%3E%3Ccircle class='dot' cx='10' cy='10' r='2'/%3E%3Ccircle class='dot' cx='60' cy='10' r='1.5'/%3E%3Ccircle class='dot' cx='110' cy='10' r='2'/%3E%3Ccircle class='dot' cx='35' cy='35' r='2.5'/%3E%3Ccircle class='dot' cx='85' cy='35' r='1.5'/%3E%3Ccircle class='dot' cx='10' cy='60' r='1.5'/%3E%3Ccircle class='dot' cx='60' cy='60' r='3'/%3E%3Ccircle class='dot' cx='110' cy='60' r='1.5'/%3E%3Ccircle class='dot' cx='35' cy='85' r='1.5'/%3E%3Ccircle class='dot' cx='85' cy='85' r='2.5'/%3E%3Ccircle class='dot' cx='10' cy='110' r='2'/%3E%3Ccircle class='dot' cx='60' cy='110' r='1.5'/%3E%3Ccircle class='dot' cx='110' cy='110' r='2'/%3E%3Cline class='node' x1='10' y1='10' x2='35' y2='35'/%3E%3Cline class='node' x1='60' y1='10' x2='35' y2='35'/%3E%3Cline class='node' x1='60' y1='10' x2='85' y2='35'/%3E%3Cline class='node' x1='110' y1='10' x2='85' y2='35'/%3E%3Cline class='node' x1='10' y1='10' x2='60' y2='10'/%3E%3Cline class='node' x1='60' y1='10' x2='110' y2='10'/%3E%3Cline class='node' x1='35' y1='35' x2='60' y2='60'/%3E%3Cline class='node' x1='85' y1='35' x2='60' y2='60'/%3E%3Cline class='node' x1='10' y1='60' x2='35' y2='35'/%3E%3Cline class='node' x1='110' y1='60' x2='85' y2='35'/%3E%3Cline class='node' x1='10' y1='60' x2='35' y2='85'/%3E%3Cline class='node' x1='60' y1='60' x2='35' y2='85'/%3E%3Cline class='node' x1='60' y1='60' x2='85' y2='85'/%3E%3Cline class='node' x1='110' y1='60' x2='85' y2='85'/%3E%3Cline class='node' x1='35' y1='85' x2='10' y2='110'/%3E%3Cline class='node' x1='35' y1='85' x2='60' y2='110'/%3E%3Cline class='node' x1='85' y1='85' x2='60' y2='110'/%3E%3Cline class='node' x1='85' y1='85' x2='110' y2='110'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 1;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(244, 237, 228, 0.68);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Progress Bar ─── */
+.progress-bar-wrap {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 1000;
+  background: transparent;
+}
+.progress-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--green), var(--amber));
+  border-radius: 0 3px 3px 0;
+  transition: width 0.1s;
+}
+
+/* ─── Hero ─── */
+.hero {
+  position: relative;
+  z-index: 1;
+  padding: clamp(60px, 10vw, 110px) clamp(16px, 5vw, 40px) clamp(50px, 8vw, 80px);
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border: 1px solid var(--border-strong);
+  border-radius: 100px;
+  background: var(--bg-card);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 28px;
+}
+
+.hero-eyebrow .pulse {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--green-light);
+  animation: breathe 2.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.7); }
+}
+
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2.4rem, 7vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--green);
+}
+
+.hero .tagline {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: var(--ink-3);
+  max-width: 560px;
+  margin: 16px auto 0;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.hero-platforms {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 32px;
+}
+
+.platform-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  border-radius: 100px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-card);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-2);
+  letter-spacing: 0.3px;
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+
+.platform-pill:hover {
+  border-color: var(--green);
+  color: var(--green);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.platform-pill .ico { font-size: 1rem; }
+
+/* ════════════════════════════════════════
+   NAVBAR — Sticky, Brand + Links + Hamburger
+════════════════════════════════════════ */
+.nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(244, 237, 228, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 clamp(12px, 4vw, 32px);
+  display: flex;
+  align-items: center;
+  height: var(--nav-height);
+  gap: 8px;
+}
+
+/* Brand */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  flex-shrink: 0;
+  margin-right: 12px;
+}
+.nav-brand-icon {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  background: var(--green);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+.nav-brand-text {
+  font-family: 'Fraunces', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+}
+.nav-brand-year {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.62rem;
+  font-weight: 500;
+  color: var(--ink-4);
+  letter-spacing: 0.5px;
+  margin-left: 2px;
+}
+
+/* Desktop links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-links::-webkit-scrollbar { display: none; }
+
+.nav-link {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  text-decoration: none;
+  transition: color 0.2s;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  border-radius: 0;
+}
+
+.nav-link:hover { color: var(--ink); }
+.nav-link.active { color: var(--green); border-bottom-color: var(--green); }
+
+.nav-link .num {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6rem;
+  color: var(--ink-4);
+  transition: color 0.2s;
+}
+.nav-link.active .num { color: var(--green-light); }
+
+/* Hamburger */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 38px; height: 38px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xs);
+  background: var(--bg-card);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: auto;
+  transition: border-color 0.2s;
+}
+.nav-hamburger:hover { border-color: var(--green); }
+.nav-hamburger span {
+  display: block;
+  width: 18px; height: 2px;
+  background: var(--ink-3);
+  border-radius: 2px;
+  transition: all 0.3s;
+  transform-origin: center;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile drawer */
+.nav-drawer {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0; right: 0;
+  background: rgba(244, 237, 228, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-strong);
+  padding: 8px 0 12px;
+  box-shadow: var(--shadow-md);
+  z-index: 99;
+  animation: slideDown 0.25s ease-out;
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.nav-drawer.open { display: block; }
+
+.nav-drawer-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px clamp(16px, 5vw, 32px);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  transition: all 0.18s;
+}
+.nav-drawer-link:hover {
+  color: var(--ink);
+  background: var(--bg-elevated);
+  border-left-color: var(--border-strong);
+}
+.nav-drawer-link.active {
+  color: var(--green);
+  background: var(--green-glow);
+  border-left-color: var(--green);
+}
+.nav-drawer-link .num {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.65rem;
+  color: var(--ink-4);
+  min-width: 22px;
+}
+.nav-drawer-link.active .num { color: var(--green-light); }
+
+/* ─── Main Layout ─── */
+main {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: clamp(32px, 5vw, 56px) clamp(16px, 5vw, 32px) 100px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Section ─── */
+.section {
+  margin-bottom: clamp(56px, 8vw, 88px);
+  animation: riseIn 0.5s ease-out both;
+}
+
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.section-num {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  border: 1px solid;
+}
+.n-green  { color: var(--green); border-color: var(--green); background: var(--green-glow); }
+.n-amber  { color: var(--amber); border-color: var(--amber); background: var(--amber-glow); }
+.n-terra  { color: var(--terra); border-color: var(--terra); background: var(--terra-glow); }
+.n-sage   { color: var(--sage);  border-color: var(--sage);  background: rgba(92,122,78,.1); }
+
+.section-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.section-sub {
+  color: var(--ink-3);
+  font-size: 0.92rem;
+  max-width: 600px;
+  font-weight: 400;
+  margin-bottom: 28px;
+  line-height: 1.65;
+}
+
+/* ─── Divider ─── */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-strong) 30%, var(--border-strong) 70%, transparent);
+  margin: clamp(36px, 5vw, 56px) 0;
+  position: relative;
+}
+.divider::after {
+  content: '◆';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg);
+  padding: 0 10px;
+  color: var(--ink-4);
+  font-size: 0.55rem;
+}
+
+/* ─── Card ─── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: clamp(18px, 4vw, 28px);
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.card-ico {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.15rem;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  flex-shrink: 0;
+}
+
+.card-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.card p, .card li {
+  color: var(--ink-3);
+  font-size: 0.88rem;
+  line-height: 1.75;
+}
+
+.card ul { list-style: none; padding: 0; }
+.card ul li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 5px;
+}
+.card ul li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+/* ─── Table ─── */
+.tbl-wrap { overflow-x: auto; margin: 12px 0; -webkit-overflow-scrolling: touch; }
+table.styled {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+  min-width: 420px;
+}
+table.styled th {
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--border-strong);
+  white-space: nowrap;
+}
+table.styled td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--ink-3);
+  vertical-align: top;
+}
+table.styled td:first-child {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8rem;
+  color: var(--green);
+  white-space: nowrap;
+}
+table.styled tr:last-child td { border-bottom: none; }
+table.styled tbody tr:hover { background: var(--bg-elevated); }
+
+/* ─── OS Tabs ─── */
+.tab-strip {
+  display: flex;
+  gap: 2px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.tab-btn {
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ink-3);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: 'Syne', sans-serif;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active {
+  background: var(--bg-card);
+  color: var(--green);
+  box-shadow: var(--shadow-sm);
+}
+.os-panel { display: none; }
+.os-panel.active { display: block; }
+
+/* ─── Code Block ─── */
+.code-block {
+  position: relative;
+  background: var(--bg-code);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-sm);
+  margin: 14px 0;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.code-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 16px;
+  background: var(--bg-code-alt);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  gap: 8px;
+}
+.code-lang {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: transparent;
+  color: rgba(255,255,255,0.3);
+  font-size: 0.7rem;
+  font-family: 'Fira Code', monospace;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.copy-btn:hover { border-color: rgba(74,140,65,0.6); color: #7DC96E; }
+.copy-btn.ok    { border-color: rgba(74,140,65,0.8); color: #7DC96E; }
+.code-body {
+  padding: clamp(12px, 3vw, 18px) clamp(14px, 3vw, 22px);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.code-body pre {
+  font-family: 'Fira Code', monospace;
+  font-size: clamp(0.7rem, 1.8vw, 0.82rem);
+  line-height: 1.75;
+  color: #D4C9B8;
+  white-space: pre;
+  margin: 0;
+}
+.c  { color: #5A6E44; }
+.kw { color: #7DC96E; }
+.fl { color: #E8A94B; }
+.st { color: #7ABFE8; }
+.ou { color: #64748B; font-style: italic; }
+.pr { color: #C07AB8; }
+.nu { color: #E87070; }
+
+/* ─── Steps ─── */
+.steps { margin: 4px 0 24px; }
+.step {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 6px;
+}
+.step-track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2px;
+  flex-shrink: 0;
+}
+.step-dot {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 2px solid var(--border-strong);
+  background: var(--bg-card);
+  color: var(--ink-3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.step-dot.on {
+  border-color: var(--green);
+  background: var(--green-glow);
+  color: var(--green);
+}
+.step-line {
+  width: 2px;
+  flex: 1;
+  min-height: 20px;
+  background: var(--border);
+  margin: 5px 0;
+}
+.step-body { flex: 1; padding-bottom: 12px; min-width: 0; }
+.step-h {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ink);
+  margin-bottom: 5px;
+}
+.step-p {
+  color: var(--ink-3);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+/* ─── Info Boxes ─── */
+.box {
+  display: flex;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  margin: 16px 0;
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+  align-items: flex-start;
+}
+.box .ico { flex-shrink: 0; margin-top: 1px; font-size: 1rem; }
+.box strong { font-weight: 700; }
+.box.tip   { background: var(--green-glow); border: 1px solid rgba(45,90,39,.2); }
+.box.warn  { background: var(--amber-glow); border: 1px solid rgba(200,130,10,.2); }
+.box.ok    { background: rgba(45,90,39,.06); border: 1px solid rgba(45,90,39,.18); }
+code.ic {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8em;
+  background: rgba(45,90,39,.1);
+  border: 1px solid rgba(45,90,39,.2);
+  color: var(--green);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+/* ─── Model Cards ─── */
+.model-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s;
+}
+.model-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.model-card-top {
+  padding: clamp(16px, 3vw, 24px) clamp(16px, 4vw, 28px) 14px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.model-name {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1rem, 3vw, 1.35rem);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+.model-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.68rem;
+  font-weight: 500;
+  padding: 2px 9px;
+  border-radius: 100px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  color: var(--ink-3);
+}
+.model-body {
+  padding: clamp(14px, 3vw, 20px) clamp(16px, 4vw, 28px) clamp(16px, 3vw, 24px);
+}
+.model-desc {
+  color: var(--ink-3);
+  font-size: 0.88rem;
+  margin-bottom: 16px;
+  line-height: 1.65;
+}
+
+/* ─── Test Questions ─── */
+.test-q {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 3px solid;
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+}
+.test-q-num {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.test-q-text {
+  font-size: 0.86rem;
+  color: var(--ink-2);
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* ─── Accordion ─── */
+.accordion {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.accordion-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  background: none;
+  border: none;
+  color: var(--ink);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  gap: 12px;
+  transition: background 0.2s;
+}
+.accordion-trigger:hover { background: var(--bg-elevated); }
+.accordion-icon {
+  color: var(--ink-4);
+  font-size: 0.75rem;
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+.accordion.open .accordion-icon { transform: rotate(180deg); }
+.accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.accordion.open .accordion-body { max-height: 6000px; }
+.accordion-inner {
+  padding: 4px 20px 20px;
+  border-top: 1px solid var(--border);
+}
+
+/* ─── Back to Top ─── */
+.back-top {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  color: var(--ink-3);
+  font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: all 0.3s;
+  z-index: 90;
+}
+.back-top.show { opacity: 1; transform: translateY(0); }
+.back-top:hover { border-color: var(--green); color: var(--green); }
+
+/* ─── Footer ─── */
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid var(--border-strong);
+  color: var(--ink-4);
+  font-size: 0.78rem;
+  line-height: 1.8;
+}
+footer a { color: var(--green); text-decoration: none; font-weight: 600; }
+footer a:hover { text-decoration: underline; }
+
+.footer-inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink-2);
+}
+
+/* ─── Colour accents per model ─── */
+.accent-llama   { color: #2D5A27; }
+.accent-deepseek { color: #8B5CF6; }
+.accent-gemma   { color: #C8820A; }
+.accent-qwen    { color: #B5441E; }
+.accent-mistral { color: #0E7490; }
+
+.bl-llama    { border-left-color: #2D5A27; }
+.bl-deepseek { border-left-color: #8B5CF6; }
+.bl-gemma    { border-left-color: #C8820A; }
+.bl-qwen     { border-left-color: #B5441E; }
+.bl-mistral  { border-left-color: #0E7490; }
+
+.tq-llama    { color: #2D5A27; }
+.tq-deepseek { color: #8B5CF6; }
+.tq-gemma    { color: #C8820A; }
+.tq-qwen     { color: #B5441E; }
+.tq-mistral  { color: #0E7490; }
+
+/* ════════════════════════════════════════
+   RESPONSIVE — Mobile First
+════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Hide desktop nav links, show hamburger */
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-brand-year { display: none; }
+
+  .hero h1 { letter-spacing: -1px; }
+  .hero-eyebrow { font-size: 0.65rem; text-align: center; }
+
+  .model-card-top { flex-direction: column; gap: 8px; }
+  .model-card:hover { transform: none; }
+
+  .back-top { bottom: 16px; right: 16px; width: 40px; height: 40px; }
+
+  .step { gap: 12px; }
+  .step-dot { width: 26px; height: 26px; font-size: 0.65rem; }
+}
+
+@media (max-width: 480px) {
+  table.styled { font-size: 0.78rem; }
+  table.styled th, table.styled td { padding: 8px 10px; }
+  .tab-btn { padding: 6px 12px; font-size: 0.72rem; }
+  .accordion-trigger { font-size: 0.82rem; padding: 13px 16px; }
+  .accordion-inner { padding: 4px 14px 16px; }
+  .hero-platforms { gap: 8px; }
+  .platform-pill { padding: 7px 14px; font-size: 0.73rem; }
+  .box { padding: 12px 14px; font-size: 0.83rem; }
+  .card { padding: clamp(14px, 4vw, 20px); }
+  .nav-brand-text { font-size: 0.85rem; }
+}
+
+@media (min-width: 769px) {
+  .nav-drawer { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Progress -->
+<div class="progress-bar-wrap"><div class="progress-bar" id="pgBar"></div></div>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<header class="hero">
+  <div class="hero-eyebrow"><span class="pulse"></span> Complete Implementation Guide &mdash; 2026 Edition</div>
+  <h1>Getting Started<br>with <em>Ollama</em></h1>
+  <p class="tagline">Install, configure, and master local LLMs &mdash; from your first <code style="font-family:Fira Code,monospace;font-size:.9em;color:var(--green)">ollama run</code> to production-ready API integrations.</p>
+  <div class="hero-platforms">
+    <span class="platform-pill"><span class="ico">🐧</span> Linux / Ubuntu</span>
+    <span class="platform-pill"><span class="ico">🍎</span> macOS</span>
+    <span class="platform-pill"><span class="ico">🪟</span> Windows WSL2</span>
+    <span class="platform-pill"><span class="ico">🦙</span> 5 Models Covered</span>
+    <span class="platform-pill"><span class="ico">🐍</span> Python &amp; REST API</span>
+  </div>
+</header>
+
+<!-- ══════════════════ NAV ══════════════════ -->
+<nav class="nav-wrap" id="siteNav">
+  <div class="nav-container">
+
+    <!-- Brand -->
+    <a href="#" class="nav-brand" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+      <div class="nav-brand-icon">🦙</div>
+      <span class="nav-brand-text">Ollama Guide <span class="nav-brand-year">2026</span></span>
+    </a>
+
+    <!-- Desktop links -->
+    <div class="nav-links" id="desktopLinks">
+      <a href="#prerequisites" class="nav-link"><span class="num">01</span> Prerequisites</a>
+      <a href="#installation"  class="nav-link"><span class="num">02</span> Installation</a>
+      <a href="#signup"        class="nav-link"><span class="num">03</span> Sign In</a>
+      <a href="#cli"           class="nav-link"><span class="num">04</span> CLI</a>
+      <a href="#models"        class="nav-link"><span class="num">05</span> Models</a>
+      <a href="#testing"       class="nav-link"><span class="num">06</span> Testing</a>
+      <a href="#api"           class="nav-link"><span class="num">07</span> API</a>
+      <a href="#troubleshoot"  class="nav-link"><span class="num">08</span> Troubleshoot</a>
+    </div>
+
+    <!-- Hamburger button -->
+    <button class="nav-hamburger" id="hamburgerBtn" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </div>
+
+  <!-- Mobile drawer -->
+  <div class="nav-drawer" id="navDrawer" role="navigation" aria-label="Mobile navigation">
+    <a href="#prerequisites" class="nav-drawer-link"><span class="num">01</span> Prerequisites</a>
+    <a href="#installation"  class="nav-drawer-link"><span class="num">02</span> Installation</a>
+    <a href="#signup"        class="nav-drawer-link"><span class="num">03</span> Sign In</a>
+    <a href="#cli"           class="nav-drawer-link"><span class="num">04</span> CLI Reference</a>
+    <a href="#models"        class="nav-drawer-link"><span class="num">05</span> Models</a>
+    <a href="#testing"       class="nav-drawer-link"><span class="num">06</span> Testing</a>
+    <a href="#api"           class="nav-drawer-link"><span class="num">07</span> API &amp; Python</a>
+    <a href="#troubleshoot"  class="nav-drawer-link"><span class="num">08</span> Troubleshooting</a>
+  </div>
+</nav>
+
+<!-- ══════════════════ MAIN ══════════════════ -->
+<main>
+
+  <!-- ▸ 01 PREREQUISITES -->
+  <section class="section" id="prerequisites">
+    <div class="section-label">
+      <span class="section-num n-green">01</span>
+      <span class="section-tag">Getting Ready</span>
+    </div>
+    <h2 class="section-title">Prerequisites</h2>
+    <p class="section-sub">Ensure your system meets the requirements and your tools are current before installing Ollama.</p>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-ico">⚙️</div>
+        <span class="card-title">System Requirements</span>
+      </div>
+      <div class="tbl-wrap">
+        <table class="styled">
+          <thead><tr><th>Requirement</th><th>Minimum</th><th>Recommended</th></tr></thead>
+          <tbody>
+            <tr><td>RAM</td><td>8 GB</td><td>16 GB+</td></tr>
+            <tr><td>Disk Space</td><td>12 GB free</td><td>50 GB+ free</td></tr>
+            <tr><td>OS (Linux)</td><td>Ubuntu 20.04+</td><td>Ubuntu 22.04 / 24.04</td></tr>
+            <tr><td>OS (macOS)</td><td>macOS 12+</td><td>macOS 14+ (Apple Silicon)</td></tr>
+            <tr><td>OS (Windows)</td><td>Windows 10+</td><td>Windows 11 with WSL2</td></tr>
+            <tr><td>GPU (Optional)</td><td>NVIDIA 6 GB VRAM</td><td>NVIDIA 8 GB+ / Apple M-series</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-ico">🔧</div>
+        <span class="card-title">Update Your System First</span>
+      </div>
+
+      <div class="tab-strip" data-group="prereq">
+        <button class="tab-btn active" data-os="linux">Linux / Ubuntu</button>
+        <button class="tab-btn" data-os="macos">macOS</button>
+        <button class="tab-btn" data-os="win">Windows (WSL)</button>
+      </div>
+
+      <div class="os-panel active" data-group="prereq" data-os="linux">
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">Bash &mdash; Terminal</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="c"># Update package lists and upgrade installed packages</span>
+<span class="kw">sudo</span> apt update && <span class="kw">sudo</span> apt upgrade <span class="fl">-y</span>
+
+<span class="c"># Install essential tools</span>
+<span class="kw">sudo</span> apt install <span class="fl">-y</span> curl wget git
+
+<span class="c"># Verify curl is installed</span>
+<span class="kw">curl</span> <span class="fl">--version</span></pre></div>
+        </div>
+      </div>
+
+      <div class="os-panel" data-group="prereq" data-os="macos">
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">Bash &mdash; Terminal</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="c"># Install Homebrew if you don't have it</span>
+<span class="kw">/bin/bash</span> <span class="fl">-c</span> <span class="st">"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</span>
+
+<span class="c"># Update Homebrew and install essentials</span>
+<span class="kw">brew</span> update
+<span class="kw">brew</span> install curl wget git
+
+<span class="c"># Verify macOS version</span>
+<span class="kw">sw_vers</span></pre></div>
+        </div>
+      </div>
+
+      <div class="os-panel" data-group="prereq" data-os="win">
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">PowerShell &mdash; Admin</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="c"># Enable WSL2 — run PowerShell as Administrator</span>
+<span class="kw">wsl</span> <span class="fl">--install</span>
+
+<span class="c"># After reboot, set WSL2 as default</span>
+<span class="kw">wsl</span> <span class="fl">--set-default-version</span> 2
+
+<span class="c"># Install Ubuntu from Microsoft Store, then inside WSL:</span>
+<span class="kw">sudo</span> apt update && <span class="kw">sudo</span> apt upgrade <span class="fl">-y</span>
+<span class="kw">sudo</span> apt install <span class="fl">-y</span> curl wget git</pre></div>
+        </div>
+      </div>
+
+      <div class="box tip">
+        <span class="ico">💡</span>
+        <div><strong>Why <code class="ic">sudo</code>?</strong> Many install commands need root privileges to write to system directories. The <code class="ic">sudo</code> prefix temporarily elevates your permissions and will prompt for your password.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ▸ 02 INSTALLATION -->
+  <section class="section" id="installation">
+    <div class="section-label">
+      <span class="section-num n-amber">02</span>
+      <span class="section-tag">Setup</span>
+    </div>
+    <h2 class="section-title">Install Ollama</h2>
+    <p class="section-sub">One-line installer for Linux/WSL, simple download for macOS. Choose your platform below.</p>
+
+    <div class="tab-strip" data-group="install">
+      <button class="tab-btn active" data-os="linux">Linux / Ubuntu / WSL</button>
+      <button class="tab-btn" data-os="macos">macOS</button>
+    </div>
+
+    <!-- Linux -->
+    <div class="os-panel active" data-group="install" data-os="linux">
+      <div class="steps">
+        <div class="step">
+          <div class="step-track"><div class="step-dot on">1</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-h">Run the Official Install Script</div>
+            <div class="step-p">This single command downloads and installs Ollama, sets up the systemd service, and configures everything automatically.</div>
+            <div class="code-block">
+              <div class="code-head"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+              <div class="code-body"><pre><span class="kw">curl</span> <span class="fl">-fsSL</span> https://ollama.com/install.sh | <span class="kw">sh</span></pre></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-track"><div class="step-dot on">2</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-h">Verify the Installation</div>
+            <div class="step-p">Confirm Ollama is installed and the systemd service is running.</div>
+            <div class="code-block">
+              <div class="code-head"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+              <div class="code-body"><pre><span class="c"># Check Ollama version</span>
+<span class="kw">ollama</span> <span class="fl">--version</span>
+<span class="ou"># Expected: ollama version 0.x.x</span>
+
+<span class="c"># Check the service status</span>
+<span class="kw">sudo</span> systemctl status ollama
+<span class="ou"># Should show: ● ollama.service — active (running)</span></pre></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-track"><div class="step-dot on">3</div></div>
+          <div class="step-body">
+            <div class="step-h">Enable Auto-Start on Boot</div>
+            <div class="step-p">Ensure Ollama starts automatically every time your machine boots.</div>
+            <div class="code-block">
+              <div class="code-head"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+              <div class="code-body"><pre><span class="kw">sudo</span> systemctl enable ollama
+<span class="kw">sudo</span> systemctl restart ollama</pre></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box ok">
+        <span class="ico">✅</span>
+        <div><strong>Quick Health Check</strong> &mdash; Open your browser and visit <code class="ic">http://localhost:11434</code>. You should see <em>"Ollama is running"</em>.</div>
+      </div>
+    </div>
+
+    <!-- macOS -->
+    <div class="os-panel" data-group="install" data-os="macos">
+      <div class="steps">
+        <div class="step">
+          <div class="step-track"><div class="step-dot on">1</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-h">Download Ollama</div>
+            <div class="code-block">
+              <div class="code-head"><span class="code-lang">Option A &mdash; Homebrew</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+              <div class="code-body"><pre><span class="kw">brew</span> install ollama</pre></div>
+            </div>
+            <div class="code-block">
+              <div class="code-head"><span class="code-lang">Option B &mdash; Direct Download</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+              <div class="code-body"><pre><span class="kw">open</span> https://ollama.com/download</pre></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-track"><div class="step-dot on">2</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-h">Install &amp; Launch</div>
+            <div class="step-p">If using the .zip download, extract it and move <strong>Ollama.app</strong> to your Applications folder, then launch it &mdash; the llama icon will appear in your menu bar.</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-track"><div class="step-dot on">3</div></div>
+          <div class="step-body">
+            <div class="step-h">Verify Installation</div>
+            <div class="code-block">
+              <div class="code-head"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+              <div class="code-body"><pre><span class="kw">ollama</span> <span class="fl">--version</span>
+
+<span class="c"># Test that the server is responsive</span>
+<span class="kw">curl</span> http://localhost:11434
+<span class="ou"># Expected: Ollama is running</span></pre></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box tip">
+        <span class="ico">🍎</span>
+        <div><strong>Apple Silicon Advantage</strong> &mdash; M1/M2/M3/M4 Macs automatically use the Metal GPU for acceleration. Zero extra drivers or configuration needed.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ▸ 03 SIGN IN -->
+  <section class="section" id="signup">
+    <div class="section-label">
+      <span class="section-num n-sage">03</span>
+      <span class="section-tag">Account</span>
+    </div>
+    <h2 class="section-title">Sign In to Ollama</h2>
+    <p class="section-sub">Sign-in unlocks pushing custom models to the registry. Completely optional for pulling and running public models.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-track"><div class="step-dot on">1</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <div class="step-h">Create an Account</div>
+          <div class="step-p">Visit <a href="https://ollama.com" style="color:var(--green);font-weight:700;text-decoration:none;">ollama.com</a> and click <strong>Sign Up</strong>. You can register with your email or GitHub account.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-track"><div class="step-dot on">2</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <div class="step-h">Authenticate via CLI</div>
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="c"># Opens a browser window for OAuth authentication</span>
+<span class="kw">ollama</span> signin</pre></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-track"><div class="step-dot on">3</div></div>
+        <div class="step-body">
+          <div class="step-h">Explore the Model Library</div>
+          <div class="step-p">Hundreds of models at <a href="https://ollama.com/library" style="color:var(--green);font-weight:700;text-decoration:none;">ollama.com/library</a> &mdash; from 1B parameter pocket models to 70B+ powerhouses.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box tip">
+      <span class="ico">🔓</span>
+      <div><strong>No account needed for most tasks.</strong> Pull and run any public model anonymously. Sign-in is only required to push your own custom models to the Ollama registry.</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ▸ 04 CLI -->
+  <section class="section" id="cli">
+    <div class="section-label">
+      <span class="section-num n-terra">04</span>
+      <span class="section-tag">Command Line</span>
+    </div>
+    <h2 class="section-title">CLI Deep Dive</h2>
+    <p class="section-sub">Every Ollama command you'll ever need &mdash; from model management to server control and interactive sessions.</p>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-ico">⌨️</div>
+        <span class="card-title">Complete Command Reference</span>
+      </div>
+      <div class="tbl-wrap">
+        <table class="styled">
+          <thead><tr><th>Command</th><th>What It Does</th></tr></thead>
+          <tbody>
+            <tr><td>ollama serve</td><td>Start the Ollama server (port 11434 by default)</td></tr>
+            <tr><td>ollama run &lt;model&gt;</td><td>Download (if needed) and start interactive chat</td></tr>
+            <tr><td>ollama pull &lt;model&gt;</td><td>Download a model without starting it</td></tr>
+            <tr><td>ollama list</td><td>Show all locally downloaded models with sizes</td></tr>
+            <tr><td>ollama ps</td><td>Show currently loaded / running models in memory</td></tr>
+            <tr><td>ollama show &lt;model&gt;</td><td>Display model details &mdash; parameters, template, license</td></tr>
+            <tr><td>ollama stop &lt;model&gt;</td><td>Unload a model from memory</td></tr>
+            <tr><td>ollama rm &lt;model&gt;</td><td>Permanently delete a model from disk</td></tr>
+            <tr><td>ollama cp &lt;src&gt; &lt;dst&gt;</td><td>Clone a model under a new name</td></tr>
+            <tr><td>ollama create &lt;name&gt;</td><td>Create a custom model from a Modelfile</td></tr>
+            <tr><td>ollama push &lt;model&gt;</td><td>Push a custom model to the Ollama registry</td></tr>
+            <tr><td>ollama signin</td><td>Sign in to your Ollama account</td></tr>
+            <tr><td>ollama signout</td><td>Sign out of your Ollama account</td></tr>
+            <tr><td>ollama --version</td><td>Display installed Ollama version</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span>🚀 Essential CLI Workflow &mdash; Hands-On Practice</span>
+        <span class="accordion-icon">▼</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">Bash &mdash; Hands-On</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="c"># Step 1: Ensure the server is running</span>
+<span class="kw">ollama</span> serve &
+<span class="c"># (On Linux with systemd it's already running)</span>
+
+<span class="c"># Step 2: Choose a model and pull it</span>
+<span class="c">#   Popular models from ollama.com/library:</span>
+<span class="kw">ollama</span> pull llama3.2:1b        <span class="c"># Meta Llama 3.2  — ~1.3 GB (lightweight)</span>
+<span class="kw">ollama</span> pull gemma3:4b          <span class="c"># Google Gemma 3  — ~2.5 GB (multimodal)</span>
+<span class="kw">ollama</span> pull deepseek-r1:8b     <span class="c"># DeepSeek R1     — ~4.9 GB (reasoning)</span>
+<span class="kw">ollama</span> pull qwen3:7b           <span class="c"># Qwen 3          — ~4.4 GB (multilingual)</span>
+<span class="kw">ollama</span> pull mistral            <span class="c"># Mistral 7B      — ~4.1 GB (fast &amp; efficient)</span>
+<span class="kw">ollama</span> pull qwen2.5-coder:7b   <span class="c"># Qwen 2.5 Coder  — ~4.4 GB (code-focused)</span>
+
+<span class="c"># Step 3: List downloaded models</span>
+<span class="kw">ollama</span> list
+<span class="ou"># NAME                   ID            SIZE      MODIFIED</span>
+<span class="ou"># llama3.2:1b            a80c4f17...   1.3 GB    just now</span>
+<span class="ou"># gemma3:4b              c0494fe7...   2.5 GB    2 min ago</span>
+
+<span class="c"># Step 4: Start an interactive session</span>
+<span class="kw">ollama</span> run llama3.2:1b
+<span class="pr">>>> </span><span class="st">Hello! What can you help me with?</span>
+
+<span class="c"># Step 5: In another terminal — check what's loaded</span>
+<span class="kw">ollama</span> ps
+<span class="ou"># NAME           ID            SIZE     PROCESSOR   UNTIL</span>
+<span class="ou"># llama3.2:1b    a80c4f17...   1.3 GB   100% GPU    4 minutes</span>
+
+<span class="c"># Step 6: Show model details</span>
+<span class="kw">ollama</span> show llama3.2:1b
+
+<span class="c"># Step 7: Unload when done</span>
+<span class="kw">ollama</span> stop llama3.2:1b</pre></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span>💬 Interactive Mode &mdash; Slash Commands</span>
+        <span class="accordion-icon">▼</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p style="color:var(--ink-3);font-size:.88rem;margin-bottom:14px;">Inside an <code class="ic">ollama run</code> session, these slash commands are available:</p>
+          <div class="tbl-wrap">
+            <table class="styled">
+              <thead><tr><th>Command</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr><td>/bye</td><td>Exit the chat session</td></tr>
+                <tr><td>/clear</td><td>Clear the conversation context</td></tr>
+                <tr><td>/set system &lt;msg&gt;</td><td>Set a system prompt for the session</td></tr>
+                <tr><td>/show info</td><td>Display current model information</td></tr>
+                <tr><td>/show license</td><td>Show the model's license</td></tr>
+                <tr><td>/load &lt;model&gt;</td><td>Switch to a different model mid-session</td></tr>
+                <tr><td>/save &lt;name&gt;</td><td>Save the current session state</td></tr>
+                <tr><td>/?</td><td>Show all available slash commands</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span>🔧 Environment Variables &amp; Configuration</span>
+        <span class="accordion-icon">▼</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">Linux &mdash; systemd service override</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="c"># Edit the Ollama service configuration</span>
+<span class="kw">sudo</span> systemctl edit ollama
+
+<span class="c"># Add these lines under [Service]:</span>
+[Service]
+Environment=<span class="st">"OLLAMA_HOST=0.0.0.0"</span>
+Environment=<span class="st">"OLLAMA_ORIGINS=*"</span>
+Environment=<span class="st">"OLLAMA_NUM_PARALLEL=2"</span>
+
+<span class="c"># Save and reload</span>
+<span class="kw">sudo</span> systemctl daemon-reload
+<span class="kw">sudo</span> systemctl restart ollama</pre></div>
+          </div>
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">macOS &mdash; launchctl</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="kw">launchctl</span> setenv OLLAMA_HOST <span class="st">"0.0.0.0"</span>
+<span class="kw">launchctl</span> setenv OLLAMA_ORIGINS <span class="st">"*"</span>
+<span class="c"># Then restart the Ollama app from menu bar</span></pre></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span>🔗 Popular Integrations &mdash; Tools That Work With Ollama</span>
+        <span class="accordion-icon">▼</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p style="color:var(--ink-3);font-size:.88rem;margin-bottom:14px;">Ollama integrates with a wide range of tools. See the full list at <a href="https://docs.ollama.com/integrations" style="color:var(--green);" target="_blank">docs.ollama.com/integrations</a>.</p>
+          <div class="tbl-wrap">
+            <table class="styled">
+              <thead><tr><th>Category</th><th>Tools</th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td>Coding Agents</td><td>Claude Code, Codex, OpenCode, Droid, Goose, Pi</td><td>AI agents that read, modify, and execute code in your projects</td></tr>
+                <tr><td>Assistants</td><td>OpenClaw</td><td>General-purpose AI assistant</td></tr>
+                <tr><td>IDEs &amp; Editors</td><td>VS Code, Cline, Roo Code, JetBrains, Xcode, Zed</td><td>Native integrations for popular development environments</td></tr>
+                <tr><td>Chat &amp; RAG</td><td>Onyx</td><td>Chat interface with retrieval-augmented generation</td></tr>
+                <tr><td>Automation</td><td>n8n</td><td>Workflow automation with AI integration</td></tr>
+                <tr><td>Notebooks</td><td>marimo</td><td>Interactive computing environments with AI capabilities</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ▸ 05 MODELS -->
+  <section class="section" id="models">
+    <div class="section-label">
+      <span class="section-num n-green">05</span>
+      <span class="section-tag">Models</span>
+    </div>
+    <h2 class="section-title">Install &amp; Run Models</h2>
+    <p class="section-sub">Five powerful open-source LLMs, each with install commands and size guidance. Check free space with <code class="ic">df -h</code> first.</p>
+
+    <div class="box warn">
+      <span class="ico">📦</span>
+      <div><strong>Storage Note:</strong> Models range from ~1.3 GB to ~4.9 GB each. Ensure you have sufficient free disk space before pulling.</div>
+    </div>
+
+    <!-- Llama 3.2 -->
+    <div class="model-card">
+      <div class="model-card-top">
+        <div>
+          <div class="model-name accent-llama">🦙 Llama 3.2</div>
+          <div class="model-chips">
+            <span class="chip">Meta AI</span>
+            <span class="chip">1B / 3B</span>
+            <span class="chip">General Purpose</span>
+          </div>
+        </div>
+      </div>
+      <div class="model-body">
+        <p class="model-desc">Meta's latest compact model family &mdash; excellent for general conversation, reasoning, and code. The 3B variant offers strong performance while staying lightweight enough for most hardware.</p>
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">Install &amp; Run</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="c"># Pull the 3B model (recommended starting point — ~2 GB)</span>
+<span class="kw">ollama</span> pull llama3.2
+
+<span class="c"># Or the lighter 1B version (~1.3 GB)</span>
+<span class="kw">ollama</span> pull llama3.2:1b
+
+<span class="c"># Run interactively</span>
+<span class="kw">ollama</span> run llama3.2
+<span class="pr">>>> </span><span class="st">Explain the concept of microservices architecture</span></pre></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DeepSeek R1 -->
+    <div class="model-card">
+      <div class="model-card-top">
+        <div>
+          <div class="model-name accent-deepseek">🧠 DeepSeek R1</div>
+          <div class="model-chips">
+            <span class="chip">DeepSeek AI</span>
+            <span class="chip">8B / 14B</span>
+            <span class="chip">Chain-of-Thought</span>
+          </div>
+        </div>
+      </div>
+      <div class="model-body">
+        <p class="model-desc">A powerful reasoning model with visible chain-of-thought steps. Exceptional at complex problem-solving, mathematics, and logical inference tasks.</p>
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">Install &amp; Run</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="c"># Pull the 8B reasoning model (~4.9 GB)</span>
+<span class="kw">ollama</span> pull deepseek-r1:8b
+
+<span class="c"># Run with thinking output visible</span>
+<span class="kw">ollama</span> run deepseek-r1:8b <span class="fl">--think</span>
+<span class="pr">>>> </span><span class="st">Design a rate limiter for an API gateway</span></pre></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gemma 3 -->
+    <div class="model-card">
+      <div class="model-card-top">
+        <div>
+          <div class="model-name accent-gemma">💎 Gemma 3</div>
+          <div class="model-chips">
+            <span class="chip">Google</span>
+            <span class="chip">4B / 12B</span>
+            <span class="chip">Multimodal</span>
+          </div>
+        </div>
+      </div>
+      <div class="model-body">
+        <p class="model-desc">Google's open model with multimodal support (text + images). Fast, efficient, and excellent for its size class across coding and language tasks.</p>
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">Install &amp; Run</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="c"># Pull the 4B model (~2.5 GB)</span>
+<span class="kw">ollama</span> pull gemma3:4b
+
+<span class="kw">ollama</span> run gemma3:4b
+<span class="pr">>>> </span><span class="st">What is the difference between REST and GraphQL?</span></pre></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Qwen 3 -->
+    <div class="model-card">
+      <div class="model-card-top">
+        <div>
+          <div class="model-name accent-qwen">🌐 Qwen 3</div>
+          <div class="model-chips">
+            <span class="chip">Alibaba</span>
+            <span class="chip">7B / 14B / 32B</span>
+            <span class="chip">Multilingual</span>
+          </div>
+        </div>
+      </div>
+      <div class="model-body">
+        <p class="model-desc">Alibaba's top-performing open model family &mdash; exceptional at multilingual tasks, coding, and reasoning. One of the best open models available in 2026.</p>
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">Install &amp; Run</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="c"># Pull the 7B model (~4.4 GB)</span>
+<span class="kw">ollama</span> pull qwen3:7b
+
+<span class="kw">ollama</span> run qwen3:7b
+<span class="pr">>>> </span><span class="st">Write a Python decorator for caching with TTL</span></pre></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mistral -->
+    <div class="model-card">
+      <div class="model-card-top">
+        <div>
+          <div class="model-name accent-mistral">🌊 Mistral</div>
+          <div class="model-chips">
+            <span class="chip">Mistral AI</span>
+            <span class="chip">7B</span>
+            <span class="chip">Fast &amp; Efficient</span>
+          </div>
+        </div>
+      </div>
+      <div class="model-body">
+        <p class="model-desc">Mistral's flagship 7B model &mdash; impressively fast with low latency. Punches well above its weight class for coding, summarisation, and instruction-following.</p>
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">Install &amp; Run</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="c"># Pull Mistral 7B (~4.1 GB)</span>
+<span class="kw">ollama</span> pull mistral
+
+<span class="kw">ollama</span> run mistral
+<span class="pr">>>> </span><span class="st">Explain how Docker containers work</span></pre></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box ok">
+      <span class="ico">📋</span>
+      <div><strong>Pull all 5 models in one command:</strong>
+        <div class="code-block" style="margin-top:12px;margin-bottom:0;">
+          <div class="code-head"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="kw">ollama</span> pull llama3.2 && \
+<span class="kw">ollama</span> pull deepseek-r1:8b && \
+<span class="kw">ollama</span> pull gemma3:4b && \
+<span class="kw">ollama</span> pull qwen3:7b && \
+<span class="kw">ollama</span> pull mistral</pre></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ▸ 06 TESTING -->
+  <section class="section" id="testing">
+    <div class="section-label">
+      <span class="section-num n-amber">06</span>
+      <span class="section-tag">Validation</span>
+    </div>
+    <h2 class="section-title">Test &amp; Validate Each Model</h2>
+    <p class="section-sub">Three computer science prompts per model covering software development, AI agents, and LLM internals. Run these to compare quality.</p>
+
+    <!-- Test: Llama 3.2 -->
+    <div class="model-card">
+      <div class="model-card-top">
+        <div class="model-name accent-llama" style="font-size:1.05rem;">🦙 Testing Llama 3.2</div>
+      </div>
+      <div class="model-body">
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">Launch</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="kw">ollama</span> run llama3.2</pre></div>
+        </div>
+        <div class="test-q bl-llama">
+          <div class="test-q-num tq-llama">Question 1 &mdash; Development</div>
+          <div class="test-q-text">Explain the SOLID principles in software engineering with a real-world Python example for each principle.</div>
+        </div>
+        <div class="test-q bl-llama">
+          <div class="test-q-num tq-llama">Question 2 &mdash; AI Agents</div>
+          <div class="test-q-text">What is the ReAct (Reasoning + Acting) pattern in AI agents? How does it differ from simple chain-of-thought prompting? Provide a pseudocode example.</div>
+        </div>
+        <div class="test-q bl-llama">
+          <div class="test-q-num tq-llama">Question 3 &mdash; LLMs</div>
+          <div class="test-q-text">Explain the transformer attention mechanism. What are Query, Key, and Value vectors, and how does multi-head attention improve over single-head attention?</div>
+        </div>
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">Non-Interactive One-Liners</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="kw">ollama</span> run llama3.2 <span class="st">"Explain the SOLID principles with Python examples"</span>
+<span class="kw">ollama</span> run llama3.2 <span class="st">"What is the ReAct pattern in AI agents?"</span>
+<span class="kw">ollama</span> run llama3.2 <span class="st">"Explain the transformer attention mechanism"</span></pre></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Test: DeepSeek R1 -->
+    <div class="model-card">
+      <div class="model-card-top">
+        <div class="model-name accent-deepseek" style="font-size:1.05rem;">🧠 Testing DeepSeek R1</div>
+      </div>
+      <div class="model-body">
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">Launch</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="kw">ollama</span> run deepseek-r1:8b</pre></div>
+        </div>
+        <div class="test-q bl-deepseek">
+          <div class="test-q-num tq-deepseek">Question 1 &mdash; Development</div>
+          <div class="test-q-text">Design a distributed task queue system (like Celery). What components are needed, how do you handle failures, and what are the trade-offs between at-least-once vs exactly-once delivery?</div>
+        </div>
+        <div class="test-q bl-deepseek">
+          <div class="test-q-num tq-deepseek">Question 2 &mdash; AI Agents</div>
+          <div class="test-q-text">How would you implement a tool-using AI agent that can search the web, execute code, and manage files? Describe the architecture with a state machine diagram.</div>
+        </div>
+        <div class="test-q bl-deepseek">
+          <div class="test-q-num tq-deepseek">Question 3 &mdash; LLMs</div>
+          <div class="test-q-text">Compare RAG (Retrieval Augmented Generation) vs fine-tuning for adding domain knowledge to an LLM. When should you use each approach? Provide concrete scenarios.</div>
+        </div>
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">Non-Interactive One-Liners</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="kw">ollama</span> run deepseek-r1:8b <span class="st">"Design a distributed task queue system"</span>
+<span class="kw">ollama</span> run deepseek-r1:8b <span class="st">"How to implement a tool-using AI agent?"</span>
+<span class="kw">ollama</span> run deepseek-r1:8b <span class="st">"Compare RAG vs fine-tuning for LLMs"</span></pre></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Test: Gemma 3 -->
+    <div class="model-card">
+      <div class="model-card-top">
+        <div class="model-name accent-gemma" style="font-size:1.05rem;">💎 Testing Gemma 3</div>
+      </div>
+      <div class="model-body">
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">Launch</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="kw">ollama</span> run gemma3:4b</pre></div>
+        </div>
+        <div class="test-q bl-gemma">
+          <div class="test-q-num tq-gemma">Question 1 &mdash; Development</div>
+          <div class="test-q-text">Explain event-driven architecture. Write a Python example using an event bus pattern with publishers and subscribers for an e-commerce order system.</div>
+        </div>
+        <div class="test-q bl-gemma">
+          <div class="test-q-num tq-gemma">Question 2 &mdash; AI Agents</div>
+          <div class="test-q-text">What are multi-agent systems? Explain how frameworks like CrewAI or AutoGen orchestrate multiple AI agents to collaborate on complex tasks.</div>
+        </div>
+        <div class="test-q bl-gemma">
+          <div class="test-q-num tq-gemma">Question 3 &mdash; LLMs</div>
+          <div class="test-q-text">What is quantization in LLMs? Explain the difference between FP16, INT8, and INT4 quantization and their impact on model quality and performance.</div>
+        </div>
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">Non-Interactive One-Liners</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="kw">ollama</span> run gemma3:4b <span class="st">"Explain event-driven architecture with Python code"</span>
+<span class="kw">ollama</span> run gemma3:4b <span class="st">"What are multi-agent systems like CrewAI?"</span>
+<span class="kw">ollama</span> run gemma3:4b <span class="st">"Explain LLM quantization: FP16 vs INT8 vs INT4"</span></pre></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Test: Qwen 3 -->
+    <div class="model-card">
+      <div class="model-card-top">
+        <div class="model-name accent-qwen" style="font-size:1.05rem;">🌐 Testing Qwen 3</div>
+      </div>
+      <div class="model-body">
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">Launch</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="kw">ollama</span> run qwen3:7b</pre></div>
+        </div>
+        <div class="test-q bl-qwen">
+          <div class="test-q-num tq-qwen">Question 1 &mdash; Development</div>
+          <div class="test-q-text">Implement a simple API gateway in Python using FastAPI that handles rate limiting, authentication via JWT tokens, and request routing to microservices.</div>
+        </div>
+        <div class="test-q bl-qwen">
+          <div class="test-q-num tq-qwen">Question 2 &mdash; AI Agents</div>
+          <div class="test-q-text">Explain the concept of "function calling" in LLMs. How do models decide when and how to call external tools? Show the JSON schema approach.</div>
+        </div>
+        <div class="test-q bl-qwen">
+          <div class="test-q-num tq-qwen">Question 3 &mdash; LLMs</div>
+          <div class="test-q-text">What are the key differences between decoder-only (GPT), encoder-only (BERT), and encoder-decoder (T5) transformer architectures? When would you choose each?</div>
+        </div>
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">Non-Interactive One-Liners</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="kw">ollama</span> run qwen3:7b <span class="st">"Build an API gateway with FastAPI, JWT, and rate limiting"</span>
+<span class="kw">ollama</span> run qwen3:7b <span class="st">"Explain function calling in LLMs with JSON schema"</span>
+<span class="kw">ollama</span> run qwen3:7b <span class="st">"Decoder-only vs encoder-only vs encoder-decoder transformers"</span></pre></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Test: Mistral -->
+    <div class="model-card">
+      <div class="model-card-top">
+        <div class="model-name accent-mistral" style="font-size:1.05rem;">🌊 Testing Mistral</div>
+      </div>
+      <div class="model-body">
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">Launch</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="kw">ollama</span> run mistral</pre></div>
+        </div>
+        <div class="test-q bl-mistral">
+          <div class="test-q-num tq-mistral">Question 1 &mdash; Development</div>
+          <div class="test-q-text">Explain the CAP theorem with real-world examples. How do databases like PostgreSQL, MongoDB, and Cassandra make different trade-offs?</div>
+        </div>
+        <div class="test-q bl-mistral">
+          <div class="test-q-num tq-mistral">Question 2 &mdash; AI Agents</div>
+          <div class="test-q-text">What is the MCP (Model Context Protocol) by Anthropic? How does it standardize tool use and external service integration for AI agents?</div>
+        </div>
+        <div class="test-q bl-mistral">
+          <div class="test-q-num tq-mistral">Question 3 &mdash; LLMs</div>
+          <div class="test-q-text">Explain the concept of "context window" in LLMs. How do techniques like sliding window attention, sparse attention, and RoPE help extend context length?</div>
+        </div>
+        <div class="code-block">
+          <div class="code-head"><span class="code-lang">Non-Interactive One-Liners</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+          <div class="code-body"><pre><span class="kw">ollama</span> run mistral <span class="st">"Explain CAP theorem with database examples"</span>
+<span class="kw">ollama</span> run mistral <span class="st">"What is MCP (Model Context Protocol) by Anthropic?"</span>
+<span class="kw">ollama</span> run mistral <span class="st">"Explain context windows and attention mechanisms in LLMs"</span></pre></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ▸ 07 API & PYTHON -->
+  <section class="section" id="api">
+    <div class="section-label">
+      <span class="section-num n-terra">07</span>
+      <span class="section-tag">Integration</span>
+    </div>
+    <h2 class="section-title">API &amp; Python Integration</h2>
+    <p class="section-sub">Ollama exposes a REST API on port 11434 and provides official Python and JavaScript SDKs for seamless app integration.</p>
+
+    <div class="accordion open">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span>🌐 REST API &mdash; cURL Examples</span>
+        <span class="accordion-icon">▼</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">Chat Completion (Non-Streaming)</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="kw">curl</span> http://localhost:11434/api/chat \
+  <span class="fl">-d</span> <span class="st">'{
+    "model": "llama3.2",
+    "messages": [
+      { "role": "user", "content": "Explain Docker in 3 sentences" }
+    ],
+    "stream": false
+  }'</span></pre></div>
+          </div>
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">Generate Completion</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="kw">curl</span> http://localhost:11434/api/generate \
+  <span class="fl">-d</span> <span class="st">'{
+    "model": "mistral",
+    "prompt": "Write a haiku about programming",
+    "stream": false
+  }'</span></pre></div>
+          </div>
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">List Local Models</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="kw">curl</span> http://localhost:11434/api/tags</pre></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span>🐍 Python SDK &mdash; Full Integration</span>
+        <span class="accordion-icon">▼</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">Install SDK</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="kw">pip</span> install ollama</pre></div>
+          </div>
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">basic_chat.py</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="kw">from</span> ollama <span class="kw">import</span> chat
+<span class="kw">from</span> ollama <span class="kw">import</span> ChatResponse
+
+response: ChatResponse = chat(
+    model=<span class="st">'llama3.2'</span>,
+    messages=[
+        {
+            <span class="st">'role'</span>: <span class="st">'user'</span>,
+            <span class="st">'content'</span>: <span class="st">'Explain microservices vs monolith'</span>,
+        },
+    ],
+)
+
+print(response.message.content)</pre></div>
+          </div>
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">streaming_chat.py</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="kw">from</span> ollama <span class="kw">import</span> chat
+
+stream = chat(
+    model=<span class="st">'gemma3:4b'</span>,
+    messages=[{
+        <span class="st">'role'</span>: <span class="st">'user'</span>,
+        <span class="st">'content'</span>: <span class="st">'Write a Python function for binary search'</span>
+    }],
+    stream=<span class="fl">True</span>,
+)
+
+<span class="kw">for</span> chunk <span class="kw">in</span> stream:
+    print(chunk[<span class="st">'message'</span>][<span class="st">'content'</span>], end=<span class="st">''</span>, flush=<span class="fl">True</span>)</pre></div>
+          </div>
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">compare_models.py</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="c"># Benchmark the same prompt across multiple models</span>
+<span class="kw">from</span> ollama <span class="kw">import</span> chat
+<span class="kw">import</span> time
+
+models = [<span class="st">'llama3.2'</span>, <span class="st">'gemma3:4b'</span>, <span class="st">'mistral'</span>]
+prompt = <span class="st">"Explain the Observer design pattern with a Python example"</span>
+
+<span class="kw">for</span> model <span class="kw">in</span> models:
+    print(f<span class="st">"\n{'='*50}\nModel: {model}\n{'='*50}"</span>)
+    start = time.time()
+    response = chat(
+        model=model,
+        messages=[{<span class="st">'role'</span>: <span class="st">'user'</span>, <span class="st">'content'</span>: prompt}],
+    )
+    elapsed = time.time() - start
+    print(response.message.content[:<span class="nu">500</span>])
+    print(f<span class="st">"\n⏱ Response time: {elapsed:.1f}s"</span>)</pre></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span>📦 JavaScript / TypeScript SDK</span>
+        <span class="accordion-icon">▼</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">Install</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="kw">npm</span> install ollama</pre></div>
+          </div>
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">index.mjs</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="kw">import</span> ollama <span class="kw">from</span> <span class="st">"ollama"</span>;
+
+<span class="kw">const</span> response = <span class="kw">await</span> ollama.chat({
+  model: <span class="st">"llama3.2"</span>,
+  messages: [{
+    role: <span class="st">"user"</span>,
+    content: <span class="st">"Explain async/await in JavaScript"</span>,
+  }],
+});
+
+console.log(response.message.content);</pre></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ▸ 08 TROUBLESHOOTING -->
+  <section class="section" id="troubleshoot">
+    <div class="section-label">
+      <span class="section-num n-sage">08</span>
+      <span class="section-tag">Support</span>
+    </div>
+    <h2 class="section-title">Troubleshooting</h2>
+    <p class="section-sub">Quick fixes for the most common Ollama issues.</p>
+
+    <div class="accordion">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span>❌ "connection refused" when running ollama commands</span>
+        <span class="accordion-icon">▼</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p style="color:var(--ink-3);font-size:.88rem;margin-bottom:12px;">The Ollama server isn't running. Start it:</p>
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">Fix</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="c"># Linux / WSL</span>
+<span class="kw">sudo</span> systemctl start ollama
+
+<span class="c"># Run manually in foreground (any OS)</span>
+<span class="kw">ollama</span> serve
+
+<span class="c"># macOS — open the Ollama app from Applications, or:</span>
+<span class="kw">ollama</span> serve</pre></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span>🐌 Model responses are very slow</span>
+        <span class="accordion-icon">▼</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p style="color:var(--ink-3);font-size:.88rem;margin-bottom:12px;">The model may be running on CPU instead of GPU. Diagnose with:</p>
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">Diagnose &amp; Fix</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="c"># Check processor allocation</span>
+<span class="kw">ollama</span> ps
+<span class="ou"># PROCESSOR column: "100% GPU" = good  |  "100% CPU" = slow</span>
+
+<span class="c"># If on CPU, try a smaller model</span>
+<span class="kw">ollama</span> run llama3.2:1b
+
+<span class="c"># Check NVIDIA GPU memory</span>
+<span class="kw">nvidia-smi</span>
+
+<span class="c"># Check system RAM</span>
+<span class="kw">free</span> <span class="fl">-h</span></pre></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span>💾 "not enough memory" or "out of memory" error</span>
+        <span class="accordion-icon">▼</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p style="color:var(--ink-3);font-size:.88rem;margin-bottom:12px;">The model is too large for available RAM/VRAM. Try these solutions:</p>
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">Solutions</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="c"># 1. Stop other running models first</span>
+<span class="kw">ollama</span> stop llama3.2
+
+<span class="c"># 2. Use a smaller variant</span>
+<span class="kw">ollama</span> run llama3.2:1b    <span class="c"># instead of 3b</span>
+<span class="kw">ollama</span> run gemma3:1b      <span class="c"># instead of 4b</span>
+
+<span class="c"># 3. Remove unused models to free disk space</span>
+<span class="kw">ollama</span> rm deepseek-r1:8b
+
+<span class="c"># 4. Audit what's in memory</span>
+<span class="kw">ollama</span> ps</pre></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span>🔍 How to view server logs</span>
+        <span class="accordion-icon">▼</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <div class="code-block">
+            <div class="code-head"><span class="code-lang">Linux / WSL</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+            <div class="code-body"><pre><span class="c"># Stream live logs</span>
+<span class="kw">journalctl</span> <span class="fl">-u</span> ollama.service <span class="fl">-f</span>
+
+<span class="c"># View last 50 lines</span>
+<span class="kw">journalctl</span> <span class="fl">-u</span> ollama.service <span class="fl">-n</span> 50</pre></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Back to Top -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">🦙 Ollama Guide</div>
+    <p>Complete Setup &amp; Implementation Guide &mdash; 2026 Edition</p>
+    <p style="margin-top:6px;">Data sourced from <a href="https://ollama.com" target="_blank" rel="noopener">official Ollama documentation</a> and community resources.</p>
+    <p style="margin-top:6px;color:var(--ink-4);font-size:0.72rem;">Built for developers, by developers &mdash; Linux &bull; macOS &bull; Windows WSL2</p>
+  </div>
+</footer>
+
+<script>
+// ── Copy button ──
+function doCopy(btn) {
+  const text = btn.closest('.code-block').querySelector('pre').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copied';
+    btn.classList.add('ok');
+    setTimeout(() => { btn.textContent = '⎘ Copy'; btn.classList.remove('ok'); }, 2000);
+  });
+}
+
+// ── OS Tabs ──
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const strip = btn.closest('.tab-strip');
+    const group = strip.dataset.group;
+    const os    = btn.dataset.os;
+    strip.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll(`.os-panel[data-group="${group}"]`).forEach(p => p.classList.remove('active'));
+    document.querySelectorAll(`.os-panel[data-group="${group}"][data-os="${os}"]`).forEach(p => p.classList.add('active'));
+  });
+});
+
+// ── Accordion ──
+function toggleAcc(trigger) {
+  trigger.closest('.accordion').classList.toggle('open');
+}
+
+// ── Hamburger / Mobile Nav ──
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const navDrawer    = document.getElementById('navDrawer');
+
+hamburgerBtn.addEventListener('click', () => {
+  const isOpen = navDrawer.classList.toggle('open');
+  hamburgerBtn.classList.toggle('open', isOpen);
+  hamburgerBtn.setAttribute('aria-expanded', isOpen);
+});
+
+// Close drawer when a link is clicked
+navDrawer.querySelectorAll('.nav-drawer-link').forEach(link => {
+  link.addEventListener('click', () => {
+    navDrawer.classList.remove('open');
+    hamburgerBtn.classList.remove('open');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+  });
+});
+
+// ── Scroll: progress bar + back-to-top + active nav ──
+const pgBar   = document.getElementById('pgBar');
+const backTop = document.getElementById('backTop');
+const sections = document.querySelectorAll('.section');
+const navLinks  = document.querySelectorAll('.nav-link');
+const drawerLinks = document.querySelectorAll('.nav-drawer-link');
+
+window.addEventListener('scroll', () => {
+  const scrollY   = window.scrollY;
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  pgBar.style.width = (scrollY / maxScroll * 100) + '%';
+  scrollY > 500 ? backTop.classList.add('show') : backTop.classList.remove('show');
+}, { passive: true });
+
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      drawerLinks.forEach(l => l.classList.remove('active'));
+      const id = e.target.id;
+      const activeDesktop = document.querySelector(`.nav-link[href="#${id}"]`);
+      const activeMobile  = document.querySelector(`.nav-drawer-link[href="#${id}"]`);
+      if (activeDesktop) activeDesktop.classList.add('active');
+      if (activeMobile)  activeMobile.classList.add('active');
+    }
+  });
+}, { rootMargin: '-15% 0px -60% 0px' });
+
+sections.forEach(s => io.observe(s));
+
+// ── Staggered fade-in on scroll ──
+const riseObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.animationDelay = '0.05s';
+      e.target.style.animationPlayState = 'running';
+      riseObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.section, .model-card, .card, .accordion').forEach(el => {
+  el.style.animationPlayState = 'paused';
+  riseObs.observe(el);
+});
+</script>
+</body>
+</html>
