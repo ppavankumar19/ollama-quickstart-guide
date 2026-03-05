@@ -1,13 +1,15 @@
 # Ollama Quickstart Guide — 2026 Edition
 
-A complete, device-friendly HTML reference guide for installing and using Ollama to run local LLMs on Linux, macOS, and Windows WSL2.
+A complete, device-friendly HTML reference guide for installing and using Ollama to run local LLMs on Linux, macOS, and Windows.
+
+**Live URL:** [https://ollama.19062002.xyz/](https://ollama.19062002.xyz/)
 
 ## What's Covered
 
 | Section | Description |
 |---|---|
 | 01 Prerequisites | System requirements, OS setup, essential tools |
-| 02 Installation | One-line Linux installer, macOS Homebrew/download |
+| 02 Installation | Windows (Native), Linux, macOS installers |
 | 03 Sign In | Ollama account setup and CLI authentication |
 | 04 CLI Reference | All `ollama` commands + slash commands + env vars |
 | 05 Models | Install & run Llama 3.2, DeepSeek R1, Gemma 3, Qwen 3, Mistral |
@@ -26,7 +28,7 @@ A complete, device-friendly HTML reference guide for installing and using Ollama
 ## Quick Start
 
 ```bash
-# Install Ollama (Linux / WSL)
+# Install Ollama (Linux)
 curl -fsSL https://ollama.com/install.sh | sh
 
 # Pull and run your first model
@@ -46,7 +48,7 @@ Visit `http://localhost:11434` to confirm Ollama is running.
 
 ## Usage
 
-Open `index.html` in any modern browser — no build step or server required.
+Visit the live site at [https://ollama.19062002.xyz/](https://ollama.19062002.xyz/) or open `index.html` in any modern browser — no build step or server required.
 
 ```bash
 # Open directly
@@ -57,20 +59,21 @@ start index.html       # Windows
 
 ## Features
 
-- Sticky navbar with brand logo, section numbers, and active-state highlighting
-- Hamburger menu for mobile / tablet devices
-- OS-specific tabbed code blocks (Linux, macOS, Windows WSL)
-- Copy-to-clipboard on all code examples
-- Scroll progress bar and back-to-top button
-- Collapsible accordion sections for dense content
-- Fully responsive — works on phones, tablets, and desktops
+- **Custom Favicon:** Added branding icon to the browser tab.
+- **Custom Domain:** Hosted at `ollama.19062002.xyz`.
+- **Sticky Navbar:** Brand logo, section numbers, and active-state highlighting.
+- **Mobile Friendly:** Hamburger menu for small screens.
+- **OS-specific Tabs:** Native Windows, Linux, and macOS instructions.
+- **One-click Copy:** Copy-to-clipboard on all code examples.
+- **Progressive:** Scroll progress bar and back-to-top button.
+- **Accordions:** Collapsible sections for dense content.
 
 ## Platform Support
 
 Tested on:
+- Windows 10/11 (Native)
 - Ubuntu 20.04 / 22.04 / 24.04
 - macOS 12+ (Intel & Apple Silicon)
-- Windows 11 with WSL2
 
 ## Resources
 
