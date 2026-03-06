@@ -1176,10 +1176,15 @@ footer a:hover { text-decoration: underline; }
         <div class="step">
           <div class="step-track"><div class="step-dot on">1</div><div class="step-line"></div></div>
           <div class="step-body">
-            <div class="step-h">Download the Installer</div>
-            <div class="step-p">Grab <code class="ic">OllamaSetup.exe</code> from the official site. No admin rights needed.</div>
+            <div class="step-h">Install Ollama</div>
+            <div class="step-p">The fastest way is a single PowerShell command. Alternatively, download the <code class="ic">.exe</code> installer manually.</div>
             <div class="code-block">
-              <div class="code-head"><span class="code-lang">Browser or PowerShell</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+              <div class="code-head"><span class="code-lang">PowerShell (Recommended)</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
+              <div class="code-body"><pre><span class="c"># One-line install — paste in PowerShell and press Enter</span>
+<span class="kw">irm</span> <span class="st">https://ollama.com/install.ps1</span> <span class="fl">|</span> <span class="kw">iex</span></pre></div>
+            </div>
+            <div class="code-block" style="margin-top:10px;">
+              <div class="code-head"><span class="code-lang">Manual Download (Alternative)</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
               <div class="code-body"><pre><span class="c"># Option A: Open in browser</span>
 <span class="st">https://ollama.com/download/windows</span>
 
@@ -1192,8 +1197,8 @@ footer a:hover { text-decoration: underline; }
         <div class="step">
           <div class="step-track"><div class="step-dot on">2</div><div class="step-line"></div></div>
           <div class="step-body">
-            <div class="step-h">Run the Installer</div>
-            <div class="step-p">Double-click <code class="ic">OllamaSetup.exe</code> and click <strong>Install</strong>. The setup takes about 30 seconds. After installation, you'll see the 🦙 Ollama icon appear in your Windows system tray (bottom-right corner). The server starts automatically.</div>
+            <div class="step-h">Confirm Installation</div>
+            <div class="step-p">If you used the PowerShell one-liner, Ollama is already installed and running. If you downloaded <code class="ic">OllamaSetup.exe</code> manually, double-click it and click <strong>Install</strong>. Either way, the 🦙 Ollama icon will appear in your system tray and the server starts automatically.</div>
           </div>
         </div>
 
