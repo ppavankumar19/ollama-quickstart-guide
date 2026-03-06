@@ -1,0 +1,25 @@
+irm https://ollama.com/install.ps1 | iex so, i think it is the command to install ollama in windows, so its better to remove the older version and add this new version. For the index.html page.
+
+---
+
+Tool loaded.
+
+---
+
+Tool loaded.
+
+---
+
+So, Once Check the complete project and if changes git add them and commit and push them.
+
+---
+
+Tool loaded.
+
+---
+
+So, Okay.
+
+---
+
+So, I think that the terminal text in the page is dull so, make it focusable bright. The Text Should be visible. So, update this and add, commit, push.
