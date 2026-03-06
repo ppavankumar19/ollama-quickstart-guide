@@ -32,8 +32,8 @@ A complete, device-friendly HTML reference guide for installing and using Ollama
 curl -fsSL https://ollama.com/install.sh | sh
 
 # Pull and run your first model
-ollama pull llama3.2
-ollama run llama3.2
+ollama pull llama3.2:1b
+ollama run llama3.2:1b
 ```
 
 Visit `http://localhost:11434` to confirm Ollama is running.
@@ -66,7 +66,7 @@ start index.html       # Windows
 - **OS-specific Tabs:** Native Windows, Linux, and macOS instructions.
 - **One-click Copy:** Copy-to-clipboard on all code examples.
 - **Progressive:** Scroll progress bar and back-to-top button.
-- **Accordions:** Collapsible sections for dense content.
+- **Accordions:** Collapsible sections — all closed by default, opens one at a time.
 
 ## Platform Support
 
