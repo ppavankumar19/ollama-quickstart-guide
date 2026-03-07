@@ -912,6 +912,46 @@ code.ic {
 .back-top.show { opacity: 1; transform: translateY(0); }
 .back-top:hover { border-color: var(--green); color: var(--green); }
 
+/* ─── Claude Code CTA ─── */
+.hero-cc-cta {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+}
+.cc-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 26px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: all 0.25s;
+  box-shadow: var(--shadow-sm);
+  letter-spacing: 0.3px;
+  max-width: 100%;
+}
+.cc-cta-btn:hover {
+  border-color: var(--green);
+  color: var(--green);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.cc-cta-btn .cta-arrow {
+  opacity: 0.45;
+  transition: transform 0.2s, opacity 0.2s;
+  flex-shrink: 0;
+}
+.cc-cta-btn:hover .cta-arrow {
+  opacity: 1;
+  transform: translateX(4px);
+}
+.cc-cta-label { word-break: break-word; }
+
 /* ─── Footer ─── */
 footer {
   position: relative;
@@ -991,6 +1031,7 @@ footer a:hover { text-decoration: underline; }
   .nav-brand-text { font-size: 0.85rem; }
   .copy-btn { padding: 5px 10px; font-size: 0.65rem; }
   .hero h1 { letter-spacing: -0.5px; }
+  .cc-cta-btn { font-size: 0.78rem; padding: 11px 18px; gap: 8px; }
 }
 
 @media (min-width: 769px) {
@@ -1014,6 +1055,13 @@ footer a:hover { text-decoration: underline; }
     <span class="platform-pill"><span class="ico">🍎</span> macOS</span>
     <span class="platform-pill"><span class="ico">🦙</span> 5 Models Covered</span>
     <span class="platform-pill"><span class="ico">🐍</span> Python &amp; REST API</span>
+  </div>
+  <div class="hero-cc-cta">
+    <a href="cc-learning-guide.html" class="cc-cta-btn">
+      <span>📘</span>
+      <span class="cc-cta-label">Also check out: <strong>Learn Claude Code</strong> — Interactive Study Guide</span>
+      <span class="cta-arrow">→</span>
+    </a>
   </div>
 </header>
 
