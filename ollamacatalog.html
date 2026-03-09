@@ -253,14 +253,21 @@ body::after {
   padding: 10px clamp(16px, 5vw, 48px);
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.controls-right {
+  display: flex;
+  align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+  justify-content: flex-end;
 }
 .search-wrap {
   position: relative;
-  flex: 1;
   min-width: 160px;
-  max-width: 280px;
+  max-width: 260px;
 }
 .search-ico {
   position: absolute;
@@ -318,11 +325,11 @@ body::after {
   box-shadow: var(--shadow-sm);
 }
 .count-label {
-  margin-left: auto;
   font-family: 'Fira Code', monospace;
   font-size: 0.66rem;
   color: var(--ink-4);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* ─── Main Wrapper ─── */
@@ -828,19 +835,19 @@ footer a:hover { text-decoration: underline; }
   <p class="tagline">A structured reference for every major model available on Ollama's local inference platform — covering specialties, sizes, deployments, and licensing. Built for developers who need clarity, not noise.</p>
   <div class="hero-stats">
     <div class="stat-pill">
-      <span class="stat-val">100+</span>
+      <span class="stat-val count-up" data-target="100" data-suffix="+">0+</span>
       <span class="stat-lbl">Models Available</span>
     </div>
     <div class="stat-pill">
-      <span class="stat-val">16</span>
+      <span class="stat-val count-up" data-target="16" data-suffix="">0</span>
       <span class="stat-lbl">Profiled Here</span>
     </div>
     <div class="stat-pill">
-      <span class="stat-val">270M→671B</span>
+      <span class="stat-val count-range" data-from="270M" data-to="671B">270M→671B</span>
       <span class="stat-lbl">Parameter Range</span>
     </div>
     <div class="stat-pill">
-      <span class="stat-val">4+</span>
+      <span class="stat-val count-up" data-target="4" data-suffix="+">0+</span>
       <span class="stat-lbl">Architecture Types</span>
     </div>
   </div>
@@ -848,20 +855,22 @@ footer a:hover { text-decoration: underline; }
 
 <!-- CONTROLS -->
 <div class="controls">
-  <div class="search-wrap">
-    <span class="search-ico">⌕</span>
-    <input type="search" id="si" placeholder="Search models, authors, tags…" oninput="fc()">
-  </div>
-  <div class="filter-strip">
-    <button class="fbtn active" onclick="sf('all',this)">All</button>
-    <button class="fbtn" onclick="sf('general',this)">General</button>
-    <button class="fbtn" onclick="sf('code',this)">Code</button>
-    <button class="fbtn" onclick="sf('reasoning',this)">Reasoning</button>
-    <button class="fbtn" onclick="sf('vision',this)">Vision</button>
-    <button class="fbtn" onclick="sf('edge',this)">Edge</button>
-    <button class="fbtn" onclick="sf('embed',this)">Embedding</button>
-  </div>
   <span class="count-label" id="cl">Showing all 16 models</span>
+  <div class="controls-right">
+    <div class="search-wrap">
+      <span class="search-ico">⌕</span>
+      <input type="search" id="si" placeholder="Search models, authors, tags…" oninput="fc()">
+    </div>
+    <div class="filter-strip">
+      <button class="fbtn active" onclick="sf('all',this)">All</button>
+      <button class="fbtn" onclick="sf('general',this)">General</button>
+      <button class="fbtn" onclick="sf('code',this)">Code</button>
+      <button class="fbtn" onclick="sf('reasoning',this)">Reasoning</button>
+      <button class="fbtn" onclick="sf('vision',this)">Vision</button>
+      <button class="fbtn" onclick="sf('edge',this)">Edge</button>
+      <button class="fbtn" onclick="sf('embed',this)">Embedding</button>
+    </div>
+  </div>
 </div>
 
 <!-- MAIN CONTENT -->
@@ -1406,6 +1415,38 @@ footer a:hover { text-decoration: underline; }
 </footer>
 
 <script>
+/* ── Count-up animation ── */
+function animateCount(el) {
+  const target = parseInt(el.dataset.target);
+  const suffix = el.dataset.suffix || '';
+  const duration = 1200;
+  const start = performance.now();
+  function step(now) {
+    const p = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.floor(ease * target) + suffix;
+    if (p < 1) requestAnimationFrame(step);
+    else el.textContent = target + suffix;
+  }
+  requestAnimationFrame(step);
+}
+function animateRange(el) {
+  const from = el.dataset.from;
+  const to   = el.dataset.to;
+  const steps = ['—', from, from + '→', from + '→' + to];
+  steps.forEach((s, i) => setTimeout(() => el.textContent = s, i * 280));
+}
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    if (el.classList.contains('count-up'))    animateCount(el);
+    if (el.classList.contains('count-range')) animateRange(el);
+    observer.unobserve(el);
+  });
+}, { threshold: 0.6 });
+document.querySelectorAll('.count-up, .count-range').forEach(el => observer.observe(el));
+
 let af = 'all';
 function sf(t, b) {
   af = t;
