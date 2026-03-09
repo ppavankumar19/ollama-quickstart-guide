@@ -1334,7 +1334,10 @@ footer a:hover { text-decoration: underline; }
             <div class="step-p">This single command downloads and installs Ollama, sets up the systemd service, and configures everything automatically.</div>
             <div class="code-block">
               <div class="code-head"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="doCopy(this)">⎘ Copy</button></div>
-              <div class="code-body"><pre><span class="kw">curl</span> <span class="fl">-fsSL</span> https://ollama.com/install.sh | <span class="kw">sh</span></pre></div>
+              <div class="code-body"><pre><span class="kw">sudo</span> <span class="kw">apt-get</span> update
+<span class="kw">sudo</span> <span class="kw">apt-get</span> install zstd
+
+<span class="kw">curl</span> <span class="fl">-fsSL</span> https://ollama.com/install.sh | <span class="kw">sh</span></pre></div>
             </div>
           </div>
         </div>
