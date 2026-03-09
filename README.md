@@ -1,6 +1,6 @@
 # Ollama Quickstart Guide — 2026 Edition
 
-A complete, device-friendly HTML reference guide for installing and using Ollama to run local LLMs on Linux, macOS, and Windows. Also includes an interactive Claude Code study guide.
+A complete, device-friendly HTML reference guide for installing and using Ollama to run local LLMs on Linux, macOS, and Windows. Also includes an interactive Claude Code study guide and a full model catalog.
 
 **Live URL:** [https://ollama.19062002.xyz/](https://ollama.19062002.xyz/)
 
@@ -12,6 +12,7 @@ A complete, device-friendly HTML reference guide for installing and using Ollama
 |---|---|
 | `index.html` | Main Ollama setup and implementation guide |
 | `cc-learning-guide.html` | Interactive Claude Code study guide — 14 lessons |
+| `ollamacatalog.html` | Ollama Model Catalog — 2026 Edition, 16 model profiles |
 
 ---
 
@@ -110,7 +111,18 @@ start index.html       # Windows
 - **One-click Copy:** Copy-to-clipboard on all code examples.
 - **Progressive:** Scroll progress bar and back-to-top button.
 - **Accordions:** Collapsible sections — all closed by default, opens one at a time.
-- **Claude Code CTA Button:** Hero-section link to `cc-learning-guide.html` with hover animation.
+- **CTA Buttons:** Two hero-section link buttons — "Learn Claude Code →" and "Explore Ollama Catalog →" — with hover animation.
+
+### ollamacatalog.html
+- **Full Design System Match:** Shares the exact Warm Craft Editorial theme from `index.html` — same CSS variables (parchment `#F4EDE4`, forest green, amber), same fonts (Fraunces, Syne, Fira Code), same neural network background.
+- **16 Model Profiles:** Individual cards for Llama 3.x, DeepSeek-R1/V3, Mistral, Mixtral, Gemma 3, Phi-4/3, Qwen3/2.5, CodeLlama, nomic-embed-text, and LLaVA.
+- **Overview Table:** Sortable summary of all 16 models — version, release date, size range, and category chips.
+- **Search & Filter:** Sticky controls bar with live text search and category filters (General, Code, Reasoning, Vision, Edge, Embedding). Count label on the left; search input and filter buttons right-aligned.
+- **Count-up Animation:** Hero stats animate on scroll using `IntersectionObserver` — numeric values count up with ease-out cubic easing; parameter range (`270M→671B`) uses a sequential reveal.
+- **Verify Section:** CLI commands with copy button and official source links for checking current model availability.
+- **Home Button:** Topbar "← Home" link always visible, styled in the page's forest green topbar.
+- **Back-to-Top Button:** Fixed bottom-right, appears after scrolling 500px — identical to `index.html`.
+- **Vol. I · 2026 Edition:** Edition label in the topbar.
 
 ### cc-learning-guide.html
 - **Neural Network BG Pattern:** Same dot-and-line SVG pattern as `index.html`, adapted to the page's warm parchment palette via a `body::before` / `body::after` layering system with correct z-index stacking.
@@ -131,12 +143,15 @@ start index.html       # Windows
 
 ## Cross-page Navigation
 
-Both pages link to each other:
+All three pages are linked to each other:
 
 | From | Button | Goes to |
 |---|---|---|
 | `index.html` (hero) | "Also check out: Learn Claude Code →" | `cc-learning-guide.html` |
+| `index.html` (hero) | "Explore: Ollama Catalog →" | `ollamacatalog.html` |
 | `cc-learning-guide.html` (topbar) | "← Ollama Guide" | `index.html` |
+| `ollamacatalog.html` (topbar) | "← Home" | `index.html` |
+| `ollamacatalog.html` (footer) | "Back to Main Guide" | `index.html` |
 
 ---
 
@@ -144,10 +159,16 @@ Both pages link to each other:
 
 ### 2026 — Latest
 
+- **Added `ollamacatalog.html`** — A full 16-model reference catalog covering every major Ollama model: Llama 3.x, DeepSeek-R1/V3, Mistral, Mixtral, Gemma 3, Phi-4/3, Qwen3/2.5, CodeLlama, nomic-embed-text, and LLaVA. Includes an overview table, individual model profile cards, and a CLI verify section.
+- **Ollama Catalog theme** — Complete Warm Craft Editorial design system applied to `ollamacatalog.html`, matching `index.html` exactly: same CSS variables, fonts (Fraunces, Syne, Fira Code), neural network background, card styles, and chip system.
+- **Count-up animation on catalog stats** — Hero stats animate on scroll via `IntersectionObserver` with ease-out cubic easing; `270M→671B` uses sequential text reveal.
+- **Right-aligned controls bar on catalog** — Count label on left; search input and all filter buttons grouped and right-aligned.
+- **Back-to-top button on catalog** — Fixed bottom-right button, identical to `index.html`, appears after 500px of scrolling.
+- **Ollama Catalog CTA on `index.html`** — Added second hero CTA button "Explore Ollama Catalog →" alongside the Claude Code button; flex-wrap layout supports both buttons side by side.
 - **Added `cc-learning-guide.html`** — A full 14-lesson interactive study guide for Claude Code, covering coding assistants, tool use, context management, custom commands, MCP servers, GitHub integration, hooks, and the SDK.
 - **Neural Network BG Pattern on cc-learning-guide** — Added `body::before` (SVG tiled background) and `body::after` (semi-transparent overlay) matching the pattern used in `index.html`. Fixed z-index layering so all content (nav, main, footer) renders above the BG at z-index 1+.
-- **Count-up Animation** — Hero stats (14 Lessons, 3.9×, ∞) animate with an ease-out cubic counter triggered by IntersectionObserver when the hero enters the viewport.
-- **Cross-page navigation** — Added "← Ollama Guide" button in the cc-learning-guide topbar and "Learn Claude Code →" CTA in the index.html hero section.
+- **Count-up Animation on cc-learning-guide** — Hero stats (14 Lessons, 3.9×, ∞) animate with an ease-out cubic counter triggered by IntersectionObserver when the hero enters the viewport.
+- **Cross-page navigation** — All three pages now link to each other via topbar/hero CTA buttons.
 - **Mobile Responsiveness improvements on cc-learning-guide** — Added 640px and 480px breakpoints: nav collapses, grids go single-column, font sizes scale, hero padding adjusts, touch targets are at least 44px, back button hides at 480px to prevent topbar overflow.
 - **Updated Windows install** to use PowerShell one-liner (`irm | iex`).
 - **Brightened terminal syntax colors** for better visibility on dark code blocks.
