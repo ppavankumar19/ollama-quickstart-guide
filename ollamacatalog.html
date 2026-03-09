@@ -775,6 +775,27 @@ footer a:hover { text-decoration: underline; }
   color: var(--ink-2);
 }
 
+/* ─── Back to Top ─── */
+.back-top {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  color: var(--ink-3);
+  font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: all 0.3s;
+  z-index: 90;
+}
+.back-top.show { opacity: 1; transform: translateY(0); }
+.back-top:hover { border-color: var(--green); color: var(--green); }
+
 /* ─── Divider ─── */
 .divider {
   height: 1px;
@@ -1407,6 +1428,8 @@ footer a:hover { text-decoration: underline; }
 
 </div><!-- /wrapper -->
 
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-brand">🦙 Ollama Catalog</div>
@@ -1446,6 +1469,12 @@ const observer = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.6 });
 document.querySelectorAll('.count-up, .count-range').forEach(el => observer.observe(el));
+
+/* ── Back to top ── */
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', () => {
+  scrollY > 500 ? backTop.classList.add('show') : backTop.classList.remove('show');
+}, { passive: true });
 
 let af = 'all';
 function sf(t, b) {
