@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ollama Model Catalog 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --paper:      #FAF8F4;
+  --page:       #F3F0EA;
+  --white:      #FFFFFF;
+  --ink:        #1A1714;
+  --ink-soft:   #3D3830;
+  --ink-muted:  #8A7F72;
+  --ink-light:  #B5ADA3;
+  --rule:       #DDD8CE;
+  --rule-dark:  #C4BDB3;
+  --forest:     #1B4332;
+  --forest-mid: #2D6A4F;
+  --forest-lt:  #EAF4EE;
+  --sienna:     #B5390A;
+  --sienna-lt:  #FDF0EB;
+  --amber:      #B45309;
+  --amber-lt:   #FEF3C7;
+  --cobalt:     #1E3A8A;
+  --cobalt-lt:  #EFF6FF;
+  --plum:       #6B21A8;
+  --plum-lt:    #FAF5FF;
+  --teal:       #0F766E;
+  --teal-lt:    #F0FDFA;
+  --rose:       #9F1239;
+  --rose-lt:    #FFF1F2;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;position:relative;overflow-x:hidden;}
+
+/* Neural Network BG Pattern */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cdefs%3E%3Cstyle%3E.node%7Bfill:none;stroke:%23986B3D;stroke-width:0.8;opacity:0.18%7D.dot%7Bfill:%23986B3D;opacity:0.22%7D%3C/style%3E%3C/defs%3E%3Ccircle class='dot' cx='10' cy='10' r='2'/%3E%3Ccircle class='dot' cx='60' cy='10' r='1.5'/%3E%3Ccircle class='dot' cx='110' cy='10' r='2'/%3E%3Ccircle class='dot' cx='35' cy='35' r='2.5'/%3E%3Ccircle class='dot' cx='85' cy='35' r='1.5'/%3E%3Ccircle class='dot' cx='10' cy='60' r='1.5'/%3E%3Ccircle class='dot' cx='60' cy='60' r='3'/%3E%3Ccircle class='dot' cx='110' cy='60' r='1.5'/%3E%3Ccircle class='dot' cx='35' cy='85' r='1.5'/%3E%3Ccircle class='dot' cx='85' cy='85' r='2.5'/%3E%3Ccircle class='dot' cx='10' cy='110' r='2'/%3E%3Ccircle class='dot' cx='60' cy='110' r='1.5'/%3E%3Ccircle class='dot' cx='110' cy='110' r='2'/%3E%3Cline class='node' x1='10' y1='10' x2='35' y2='35'/%3E%3Cline class='node' x1='60' y1='10' x2='35' y2='35'/%3E%3Cline class='node' x1='60' y1='10' x2='85' y2='35'/%3E%3Cline class='node' x1='110' y1='10' x2='85' y2='35'/%3E%3Cline class='node' x1='10' y1='10' x2='60' y2='10'/%3E%3Cline class='node' x1='60' y1='10' x2='110' y2='10'/%3E%3Cline class='node' x1='35' y1='35' x2='60' y2='60'/%3E%3Cline class='node' x1='85' y1='35' x2='60' y2='60'/%3E%3Cline class='node' x1='10' y1='60' x2='35' y2='35'/%3E%3Cline class='node' x1='110' y1='60' x2='85' y2='35'/%3E%3Cline class='node' x1='10' y1='60' x2='35' y2='85'/%3E%3Cline class='node' x1='60' y1='60' x2='35' y2='85'/%3E%3Cline class='node' x1='60' y1='60' x2='85' y2='85'/%3E%3Cline class='node' x1='110' y1='60' x2='85' y2='85'/%3E%3Cline class='node' x1='35' y1='85' x2='10' y2='110'/%3E%3Cline class='node' x1='35' y1='85' x2='60' y2='110'/%3E%3Cline class='node' x1='85' y1='85' x2='60' y2='110'/%3E%3Cline class='node' x1='85' y1='85' x2='110' y2='110'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:1;}
+body::after{content:'';position:fixed;inset:0;background:rgba(250,248,244,0.72);pointer-events:none;z-index:0;}
+body>*{position:relative;z-index:1;}
+
+/* MASTHEAD */
+.masthead{background:var(--forest);color:#fff;padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:40px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;}
+.masthead-side{opacity:.5;}
+.masthead-center{display:flex;align-items:center;gap:14px;opacity:.7;}
+.mdot{width:4px;height:4px;border-radius:50%;background:#86EFAC;}
+
+/* HERO */
+.hero{background:var(--white);border-bottom:2px solid var(--ink);padding:68px 48px 56px;position:relative;overflow:hidden;}
+.hero::after{content:'';position:absolute;top:0;right:0;width:38%;height:100%;background:repeating-linear-gradient(90deg,transparent,transparent 38px,var(--rule) 38px,var(--rule) 39px);opacity:.45;pointer-events:none;}
+.hero-inner{max-width:1180px;margin:0 auto;position:relative;z-index:1;}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--sienna);margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.eyebrow::before{content:'';display:block;width:28px;height:2px;background:var(--sienna);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,6vw,5rem);font-weight:900;line-height:1.0;color:var(--ink);letter-spacing:-2px;margin-bottom:18px;}
+h1 em{font-style:italic;color:var(--forest);}
+.hero-rule{width:56px;height:3px;background:var(--ink);margin:22px 0;}
+.hero-desc{font-size:14.5px;color:var(--ink-soft);line-height:1.78;max-width:520px;font-weight:300;}
+.hero-stats{display:flex;gap:0;margin-top:42px;border:1px solid var(--rule-dark);width:fit-content;background:var(--paper);}
+.hstat{padding:16px 30px;border-right:1px solid var(--rule-dark);text-align:center;}
+.hstat:last-child{border-right:none;}
+.hstat-val{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--ink);display:block;line-height:1;}
+.hstat-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-muted);display:block;margin-top:4px;}
+
+/* CONTROLS */
+.controls{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1.5px solid var(--ink);padding:11px 48px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;box-shadow:0 2px 14px rgba(26,23,20,.07);}
+.swrap{position:relative;flex:1;min-width:170px;max-width:300px;}
+.sicon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--ink-light);font-size:13px;pointer-events:none;}
+input[type=search]{width:100%;background:var(--paper);border:1px solid var(--rule-dark);color:var(--ink);font-family:'IBM Plex Mono',monospace;font-size:11px;padding:8px 12px 8px 28px;outline:none;border-radius:2px;transition:border-color .18s,box-shadow .18s;letter-spacing:.3px;}
+input[type=search]:focus{border-color:var(--forest);box-shadow:0 0 0 3px rgba(27,67,50,.08);}
+input[type=search]::placeholder{color:var(--ink-light);}
+.fbtn{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;background:var(--paper);border:1px solid var(--rule-dark);color:var(--ink-muted);padding:7px 13px;cursor:pointer;border-radius:2px;transition:all .14s;white-space:nowrap;}
+.fbtn:hover{background:var(--page);color:var(--ink);border-color:var(--ink-muted);}
+.fbtn.active{background:var(--forest);border-color:var(--forest);color:#fff;}
+.clabel{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-muted);white-space:nowrap;}
+
+/* WRAPPER */
+.wrapper{max-width:1220px;margin:0 auto;padding:0 48px 100px;}
+
+/* SECTION HEADS */
+.sh{display:flex;align-items:center;gap:18px;padding:50px 0 22px;}
+.snum{font-family:'Playfair Display',serif;font-style:italic;font-size:11px;color:var(--ink-light);white-space:nowrap;}
+.stitle{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--ink-muted);white-space:nowrap;}
+.srule{flex:1;height:1px;background:var(--rule-dark);}
+
+/* TABLE */
+.tscroll{overflow-x:auto;border:1.5px solid var(--ink);border-radius:2px;}
+table{width:100%;border-collapse:collapse;background:var(--white);font-size:12.5px;}
+thead{background:var(--ink);color:#fff;}
+th{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:13px 16px;text-align:left;font-weight:500;white-space:nowrap;}
+tbody tr{border-bottom:1px solid var(--rule);transition:background .12s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:var(--forest-lt);}
+td{padding:12px 16px;vertical-align:middle;font-size:12.5px;color:var(--ink-soft);}
+.tdn{font-family:'Playfair Display',serif;font-weight:700;font-size:14px;color:var(--ink);}
+.tdn small{display:block;font-family:'DM Sans',sans-serif;font-size:10px;color:var(--ink-muted);font-weight:400;margin-top:2px;}
+
+/* TAGS */
+.tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:3px 7px;border-radius:2px;margin:1px 2px 1px 0;white-space:nowrap;}
+.tag-general  {background:var(--forest-lt);color:var(--forest);}
+.tag-code     {background:var(--plum-lt);color:var(--plum);}
+.tag-reasoning{background:var(--cobalt-lt);color:var(--cobalt);}
+.tag-vision   {background:var(--sienna-lt);color:var(--sienna);}
+.tag-embed    {background:var(--amber-lt);color:var(--amber);}
+.tag-edge     {background:var(--teal-lt);color:var(--teal);}
+.tag-multilang{background:var(--rose-lt);color:var(--rose);}
+
+/* CARDS */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:18px;}
+.mcard{background:var(--white);border:1px solid var(--rule-dark);border-left:4px solid var(--ca,var(--forest));border-radius:2px;padding:22px 24px;transition:box-shadow .2s,transform .2s;opacity:0;animation:fadeUp .45s ease forwards;}
+.mcard:hover{box-shadow:0 8px 32px rgba(26,23,20,.09);transform:translateY(-2px);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.cnum{font-family:'Playfair Display',serif;font-style:italic;font-size:11px;color:var(--ink-light);margin-bottom:8px;}
+.cname{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:3px;}
+.cauthor{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--ink-muted);margin-bottom:13px;}
+.cdiv{height:1px;background:var(--rule);margin:13px 0;}
+.cdesc{font-size:13px;color:var(--ink-soft);line-height:1.72;margin-bottom:15px;font-weight:300;}
+.ctags{margin-bottom:14px;}
+.igrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px;}
+.icell{background:var(--paper);border:1px solid var(--rule);border-radius:2px;padding:8px 10px;}
+.ilbl{font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:3px;}
+.ival{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:var(--ink);}
+.ival.hi{color:var(--forest-mid);}
+.dh{font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:8px;}
+.drow{display:flex;gap:9px;margin-bottom:6px;font-size:12px;line-height:1.5;}
+.dpip{width:14px;height:14px;border-radius:50%;background:var(--ca,var(--forest));flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;}
+.dpip::after{content:'';width:5px;height:5px;border-radius:50%;background:#fff;}
+.dco{font-weight:600;color:var(--ink);}
+.dctx{color:var(--ink-muted);font-weight:300;}
+.cfoot{margin-top:15px;padding-top:11px;border-top:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:5px;}
+.lbadge{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:3px 8px;border-radius:2px;letter-spacing:.5px;}
+.lopen  {background:var(--forest-lt);color:var(--forest);border:1px solid rgba(27,67,50,.2);}
+.lcomm  {background:var(--cobalt-lt);color:var(--cobalt);border:1px solid rgba(30,58,138,.2);}
+.lrestr {background:var(--sienna-lt);color:var(--sienna);border:1px solid rgba(181,57,10,.2);}
+.lres   {background:var(--amber-lt);color:var(--amber);border:1px solid rgba(180,83,9,.2);}
+.cdate{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink-light);}
+
+/* VERIFY */
+.vbox{background:var(--white);border:1.5px solid var(--ink);border-radius:2px;overflow:hidden;}
+.vhead{background:var(--ink);color:#fff;padding:14px 28px;font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;display:flex;align-items:center;gap:12px;}
+.vbody{padding:28px;}
+.vintro{font-size:13px;color:var(--ink-muted);margin-bottom:18px;font-weight:300;line-height:1.68;}
+.cmdblock{background:var(--paper);border:1px solid var(--rule-dark);border-left:3px solid var(--forest);border-radius:2px;padding:16px 20px;margin-bottom:12px;font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.95;overflow-x:auto;white-space:pre;}
+.cc{color:var(--ink-light);font-style:italic;}
+.ck{color:var(--forest);font-weight:600;}
+.cs{color:var(--sienna);}
+.vnotes{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px;}
+.ncard{background:var(--paper);border:1px solid var(--rule);border-radius:2px;padding:16px 18px;}
+.nth{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.nth::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--forest);flex-shrink:0;}
+.nth.warn::before{background:var(--sienna);}
+.ncard ul{list-style:none;font-size:12.5px;color:var(--ink-soft);line-height:1.72;font-weight:300;}
+.ncard a{color:var(--forest);text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:11px;}
+.ncard a:hover{text-decoration:underline;}
+
+/* UTILS */
+.hidden{display:none!important;}
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:var(--paper);}
+::-webkit-scrollbar-thumb{background:var(--rule-dark);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--ink-light);}
+@media(max-width:768px){
+  .masthead{padding:0 16px;}.hero{padding:44px 20px 40px;}.controls{padding:10px 16px;}.wrapper{padding:0 16px 60px;}
+  .mgrid{grid-template-columns:1fr;}.vnotes{grid-template-columns:1fr;}
+  .hero-stats{flex-direction:column;width:100%;}.hstat{border-right:none;border-bottom:1px solid var(--rule-dark);text-align:left;padding:12px 20px;}
+  h1{font-size:2.5rem;letter-spacing:-1px;}
+}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:#86EFAC;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;opacity:.85;transition:opacity .15s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.85'">← Home</a>
+  <div class="masthead-center"><div class="mdot"></div><span>Updated March 2026</span><div class="mdot"></div></div>
+  <span class="masthead-side">Vol. II · 2026 Edition</span>
+</div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Comprehensive Reference · Local AI Models</div>
+    <h1>The Ollama<br/><em>Model Catalog</em></h1>
+    <div class="hero-rule"></div>
+    <p class="hero-desc">A structured reference for every major model available on Ollama's local inference platform — covering specialties, sizes, version histories, notable deployments, and licensing details. Built for developers and researchers who need clarity, not noise.</p>
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-val">100+</span><span class="hstat-lbl">Models Available</span></div>
+      <div class="hstat"><span class="hstat-val">16</span><span class="hstat-lbl">Profiled Here</span></div>
+      <div class="hstat"><span class="hstat-val">270M → 671B</span><span class="hstat-lbl">Parameter Range</span></div>
+      <div class="hstat"><span class="hstat-val">4+</span><span class="hstat-lbl">Architecture Types</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="swrap">
+    <span class="sicon">⌕</span>
+    <input type="search" id="si" placeholder="Search models, authors, tags…" oninput="fc()"/>
+  </div>
+  <button class="fbtn active" onclick="sf('all',this)">All</button>
+  <button class="fbtn" onclick="sf('general',this)">General</button>
+  <button class="fbtn" onclick="sf('code',this)">Code</button>
+  <button class="fbtn" onclick="sf('reasoning',this)">Reasoning</button>
+  <button class="fbtn" onclick="sf('vision',this)">Vision</button>
+  <button class="fbtn" onclick="sf('edge',this)">Edge / Tiny</button>
+  <button class="fbtn" onclick="sf('embed',this)">Embedding</button>
+  <span class="clabel" id="cl">Showing all 16 models</span>
+</div>
+
+<div class="wrapper">
+
+  <div class="sh">
+    <span class="snum">§ 01</span><span class="stitle">Overview Summary Table</span><div class="srule"></div>
+  </div>
+
+  <div class="tscroll">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Model</th><th>Latest Ver.</th><th>Release</th><th>Maintainer</th><th>Category</th><th>Size Range</th><th>Downloads</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>01</td><td class="tdn">Llama 3.3<small>Meta AI</small></td><td>3.3</td><td>Dec 2024</td><td>Meta AI</td><td><span class="tag tag-general">General</span></td><td>43 GB (70B Q4)</td><td>2.9M+</td></tr>
+        <tr><td>02</td><td class="tdn">Llama 3.1<small>Meta AI</small></td><td>3.1</td><td>Jul 2024</td><td>Meta AI</td><td><span class="tag tag-general">General</span></td><td>4.9 – 243 GB</td><td>108M+</td></tr>
+        <tr><td>03</td><td class="tdn">Llama 3.2<small>Meta AI</small></td><td>3.2</td><td>Sep 2024</td><td>Meta AI</td><td><span class="tag tag-edge">Edge</span></td><td>1.3 – 2.0 GB</td><td>51M+</td></tr>
+        <tr><td>04</td><td class="tdn">Llama 3.2-Vision<small>Meta AI</small></td><td>3.2</td><td>Sep 2024</td><td>Meta AI</td><td><span class="tag tag-vision">Vision</span></td><td>7.8 – 55 GB</td><td>High</td></tr>
+        <tr><td>05</td><td class="tdn">DeepSeek-R1<small>DeepSeek AI</small></td><td>R1</td><td>Jan 2025</td><td>DeepSeek AI</td><td><span class="tag tag-reasoning">Reasoning</span></td><td>1.1 GB – 404 GB</td><td>75M+</td></tr>
+        <tr><td>06</td><td class="tdn">DeepSeek-V3<small>DeepSeek AI</small></td><td>V3.2</td><td>Dec 2024</td><td>DeepSeek AI</td><td><span class="tag tag-general">General</span></td><td>~404 GB (MoE)</td><td>High</td></tr>
+        <tr><td>07</td><td class="tdn">Mistral 7B<small>Mistral AI</small></td><td>v0.3</td><td>Sep 2023</td><td>Mistral AI</td><td><span class="tag tag-general">General</span></td><td>4.1 GB</td><td>Very High</td></tr>
+        <tr><td>08</td><td class="tdn">Mixtral 8×7B / 8×22B<small>Mistral AI</small></td><td>8×22B</td><td>Apr 2024</td><td>Mistral AI</td><td><span class="tag tag-general">General</span></td><td>26 – 80 GB</td><td>High</td></tr>
+        <tr><td>09</td><td class="tdn">Gemma 3<small>Google DeepMind</small></td><td>3</td><td>Mar 2025</td><td>Google DeepMind</td><td><span class="tag tag-general">General</span><span class="tag tag-vision">Vision</span></td><td>1.9 – 67 GB</td><td>28M+</td></tr>
+        <tr><td>10</td><td class="tdn">Phi-4<small>Microsoft Research</small></td><td>4</td><td>Dec 2024</td><td>Microsoft</td><td><span class="tag tag-reasoning">Reasoning</span></td><td>8.9 GB (14B Q4)</td><td>High</td></tr>
+        <tr><td>11</td><td class="tdn">Phi-3 / Phi-3.5<small>Microsoft Research</small></td><td>3.5</td><td>Apr 2024</td><td>Microsoft</td><td><span class="tag tag-edge">Edge</span></td><td>2.2 – 7.9 GB</td><td>High</td></tr>
+        <tr><td>12</td><td class="tdn">Qwen3<small>Alibaba Cloud</small></td><td>3</td><td>Apr 2025</td><td>Alibaba Qwen Team</td><td><span class="tag tag-reasoning">Reasoning</span></td><td>0.6B – 235B</td><td>High</td></tr>
+        <tr><td>13</td><td class="tdn">Qwen2.5<small>Alibaba Cloud</small></td><td>2.5</td><td>Sep 2024</td><td>Alibaba Qwen Team</td><td><span class="tag tag-multilang">Multilingual</span></td><td>~400 MB – 44 GB</td><td>High</td></tr>
+        <tr><td>14</td><td class="tdn">CodeLlama<small>Meta AI</small></td><td>70B</td><td>Aug 2023</td><td>Meta AI</td><td><span class="tag tag-code">Code</span></td><td>3.8 – 38 GB</td><td>High</td></tr>
+        <tr><td>15</td><td class="tdn">nomic-embed-text<small>Nomic AI</small></td><td>v1.5</td><td>2024</td><td>Nomic AI</td><td><span class="tag tag-embed">Embedding</span></td><td>~274 MB</td><td>High</td></tr>
+        <tr><td>16</td><td class="tdn">LLaVA<small>UW-Madison</small></td><td>v1.6</td><td>Jan 2024</td><td>Haotian Liu et al.</td><td><span class="tag tag-vision">Vision</span></td><td>4.5 – 20 GB</td><td>High</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sh">
+    <span class="snum">§ 02</span><span class="stitle">Individual Model Profiles</span><div class="srule"></div>
+  </div>
+
+  <div class="mgrid" id="mg">
+
+    <div class="mcard" data-tags="general" style="--ca:#1B4332;animation-delay:.04s">
+      <div class="cnum">No. 01</div><div class="cname">Llama 3.3</div>
+      <div class="cauthor">Meta AI · December 2024</div>
+      <div class="ctags"><span class="tag tag-general">General</span><span class="tag tag-reasoning">Instruction</span></div>
+      <div class="cdiv"></div>
+      <div class="cdesc">Meta's current flagship open model. Delivers performance comparable to the 405B variant at a fraction of compute cost. Excels at multi-step reasoning, code, math, and multilingual tasks. Best single-GPU open model heading into 2025.</div>
+      <div class="igrid">
+        <div class="icell"><div class="ilbl">Min Size</div><div class="ival hi">43 GB (70B Q4)</div></div>
+        <div class="icell"><div class="ilbl">Parameters</div><div class="ival">70 Billion</div></div>
+        <div class="icell"><div class="ilbl">Context Window</div><div class="ival">128K tokens</div></div>
+        <div class="icell"><div class="ilbl">Languages</div><div class="ival">8 supported</div></div>
+      </div>
+      <div class="dh">Notable Deployments</div>
+      <div class="drow"><div class="dpip"></div><div><span class="dco">Groq Cloud</span> — <span class="dctx">Fastest known inference at ~276 tok/sec; used in production API endpoints</span></div></div>
+      <div class="drow"><div class="dpip"></div><div><span class="dco">NVIDIA TRT-LLM</span> — <span class="dctx">Up to 3.55× throughput via speculative decoding on HGX H200 hardware</span></div></div>
+      <div class="cfoot"><span class="lbadge lcomm">Llama 3.3 Community License</span><span class="cdate">Dec 2024</span></div>
+    </div>
+
+    <div class="mcard" data-tags="general code" style="--ca:#1B4332;animation-delay:.08s">
+      <div class="cnum">No. 02</div><div class="cname">Llama 3.1</div>
+      <div class="cauthor">Meta AI · July 2024</div>
+      <div class="ctags"><span class="tag tag-general">General</span><span class="tag tag-code">Code</span><span class="tag tag-multilang">Multilingual</span></div>
+      <div class="cdiv"></div>
+      <div class="cdesc">The most downloaded model on Ollama with 108M+ pulls. The 8B variant is the go-to professional workhorse for private local AI. At 405B, the first open model to truly rival GPT-4. Supports native tool use and a 128K context window throughout.</div>
+      <div class="igrid">
+        <div class="icell"><div class="ilbl">Min Size</div><div class="ival hi">4.9 GB (8B)</div></div>
+        <div class="icell"><div class="ilbl">Max Size</div><div class="ival">243 GB (405B)</div></div>
+        <div class="icell"><div class="ilbl">Context Window</div><div class="ival">128K tokens</div></div>
+        <div class="icell"><div class="ilbl">Training Tokens</div><div class="ival">15 Trillion</div></div>
+      </div>
+      <div class="dh">Notable Deployments</div>
+      <div class="drow"><div class="dpip"></div><div><span class="dco">n8n Workflows</span> — <span class="dctx">Ollama node integration for automated local business task pipelines</span></div></div>
+      <div class="drow"><div class="dpip"></div><div><span class="dco">LiteLLM / LangChain</span> — <span class="dctx">Unified proxy layer for swapping between Llama 3.1 and cloud APIs</span></div></div>
+      <div class="cfoot"><span class="lbadge lcomm">Llama 3.1 Community License</span><span class="cdate">Jul 2024</span></div>
+    </div>
+
+    <div class="mcard" data-tags="edge general" style="--ca:#0F766E;animation-delay:.12s">
+      <div class="cnum">No. 03</div><div class="cname">Llama 3.2</div>
+      <div class="cauthor">Meta AI · September 2024</div>
+      <div class="ctags"><span class="tag tag-edge">Edge / On-Device</span><span class="tag tag-multilang">Multilingual</span></div>
+      <div class="cdiv"></div>
+      <div class="cdesc">Meta's push into on-device AI. Created via pruning and knowledge distillation from Llama 3.1 8B and 70B. Compatible with Qualcomm, MediaTek, and ARM chips. The 3B model significantly outperforms Gemma 2 2.6B on instruction following benchmarks.</div>
+      <div class="igrid">
+        <div class="icell"><div class="ilbl">Min Size</div><div class="ival hi">1.3 GB (1B)</div></div>
+        <div class="icell"><div class="ilbl">Max Size</div><div class="ival">2.0 GB (3B)</div></div>
+        <div class="icell"><div class="ilbl">Context Window</div><div class="ival">128K tokens</div></div>
+        <div class="icell"><div class="ilbl">Min RAM</div><div class="ival">8 GB RAM</div></div>
+      </div>
+      <div class="dh">Notable Deployments</div>
+      <div class="drow"><div class="dpip" style="background:#0F766E"></div><div><span class="dco">Mobile / IoT</span> — <span class="dctx">CLI copilots, homelab dashboards, low-latency edge inference agents</span></div></div>
+      <div class="drow"><div class="dpip" style="background:#0F766E"></div><div><span class="dco">Qualcomm Snapdragon</span> — <span class="dctx">On-device inference on mobile chipsets without any cloud dependency</span></div></div>
+      <div class="cfoot"><span class="lbadge lcomm">Llama 3.2 Community License</span><span class="cdate">Sep 2024</span></div>
+    </div>
+
+    <div class="mcard" data-tags="vision" style="--ca:#B5390A;animation-delay:.16s">
+      <div class="cnum">No. 04</div><div class="cname">Llama 3.2-Vision</div>
+      <div class="cauthor">Meta AI · September 2024</div>
+      <div class="ctags"><span class="tag tag-vision">Vision</span><span class="tag tag-general">General</span></div>
+      <div class="cdiv"></div>
+      <div class="cdesc">Meta's first multimodal Llama. Uses cross-attention adapters to attach a vision encoder to Llama 3.1. Language model weights stayed frozen during training — making it a full drop-in replacement for text tasks. Supports images up to 1120×1120px.</div>
+      <div class="igrid">
+        <div class="icell"><div class="ilbl">Min Size</div><div class="ival hi">7.8 GB (11B)</div></div>
+        <div class="icell"><div class="ilbl">Max Size</div><div class="ival">55 GB (90B)</div></div>
+        <div class="icell"><div class="ilbl">Image Resolution</div><div class="ival">1120×1120 px</div></div>
+        <div class="icell"><div class="ilbl">Training Pairs</div><div class="ival">6 Billion imgs</div></div>
+      </div>
+      <div class="dh">Notable Deployments</div>
+      <div class="drow"><div class="dpip" style="background:#B5390A"></div><div><span class="dco">Document OCR Pipelines</span> — <span class="dctx">Chart, table, and form data extraction in enterprise workflows</span></div></div>
+      <div class="drow"><div class="dpip" style="background:#B5390A"></div><div><span class="dco">Accessibility Tools</span> — <span class="dctx">Image-to-text for accessibility apps running fully offline on local hardware</span></div></div>
+      <div class="cfoot"><span class="lbadge lrestr">US-Only Geographic Restriction</span><span class="cdate">Sep 2024</span></div>
+    </div>
+
+    <div class="mcard" data-tags="reasoning code" style="--ca:#1E3A8A;animation-delay:.20s">
+      <div class="cnum">No. 05</div><div class="cname">DeepSeek-R1</div>
+      <div class="cauthor">DeepSeek AI · January 2025</div>
+      <div class="ctags"><span class="tag tag-reasoning">Reasoning</span><span class="tag tag-code">Code</span></div>
+      <div class="cdiv"></div>
+      <div class="cdesc">Open reasoning family trained with rule-based RL rather than expensive supervised data. Includes distilled variants (1.5B – 70B) and a 671B flagship. Approaches O3 and Gemini 2.5 Pro on math and logic benchmarks. Chain-of-thought inference is native and transparent.</div>
+      <div class="igrid">
+        <div class="icell"><div class="ilbl">Min Size</div><div class="ival hi">1.1 GB (1.5B)</div></div>
+        <div class="icell"><div class="ilbl">Max Size</div><div class="ival">~404 GB (671B)</div></div>
+        <div class="icell"><div class="ilbl">Context Window</div><div class="ival">128K tokens</div></div>
+        <div class="icell"><div class="ilbl">Architecture</div><div class="ival">MoE (671B)</div></div>
+      </div>
+      <div class="dh">Notable Deployments</div>
+      <div class="drow"><div class="dpip" style="background:#1E3A8A"></div><div><span class="dco">Academic Research</span> — <span class="dctx">Chain-of-thought benchmarks with visible scratchpad-style reasoning</span></div></div>
+      <div class="drow"><div class="dpip" style="background:#1E3A8A"></div><div><span class="dco">Home Lab Engineering</span> — <span class="dctx">7B / 8B / 14B distills widely deployed as local reasoning and planning agents</span></div></div>
+      <div class="cfoot"><span class="lbadge lopen">MIT License</span><span class="cdate">Jan 2025</span></div>
+    </div>
+
+    <div class="mcard" data-tags="general reasoning" style="--ca:#1E3A8A;animation-delay:.24s">
+      <div class="cnum">No. 06</div><div class="cname">DeepSeek-V3.2</div>
+      <div class="cauthor">DeepSeek AI · December 2024 / 2025</div>
+      <div class="ctags"><span class="tag tag-general">General</span><span class="tag tag-reasoning">MoE</span></div>
+      <div class="cdiv"></div>
+      <div class="cdesc">General-purpose frontier model using Mixture-of-Experts with 671B total parameters, activating only ~37B per token. Designed for computational efficiency at frontier scale with strong reasoning performance and far lower inference cost than equivalent dense architectures.</div>
+      <div class="igrid">
+        <div class="icell"><div class="ilbl">Total Parameters</div><div class="ival hi">671B (MoE)</div></div>
+        <div class="icell"><div class="ilbl">Active / Token</div><div class="ival">~37B active</div></div>
+        <div class="icell"><div class="ilbl">Context Window</div><div class="ival">128K tokens</div></div>
+        <div class="icell"><div class="ilbl">Local Format</div><div class="ival">GGUF Q4</div></div>
+      </div>
+      <div class="dh">Notable Deployments</div>
+      <div class="drow"><div class="dpip" style="background:#1E3A8A"></div><div><span class="dco">DeepSeek API Platform</span> — <span class="dctx">Hosted inference for enterprise coding, analysis, and research tasks</span></div></div>
+      <div class="drow"><div class="dpip" style="background:#1E3A8A"></div><div><span class="dco">vLLM / SGLang</span> — <span class="dctx">High-throughput server deployment for production agent and pipeline frameworks</span></div></div>
+      <div class="cfoot"><span class="lbadge lopen">DeepSeek License 2.0</span><span class="cdate">Dec 2024</span></div>
+    </div>
+
+    <div class="mcard" data-tags="general code" style="--ca:#6B21A8;animation-delay:.28s">
+      <div class="cnum">No. 07</div><div class="cname">Mistral 7B</div>
+      <div class="cauthor">Mistral AI · September 2023</div>
+      <div class="ctags"><span class="tag tag-general">General</span><span class="tag tag-code">Code</span></div>
+      <div class="cdiv"></div>
+      <div class="cdesc">The original benchmark-setter for efficient 7B-class models. Fast, accurate, and broadly capable — from email drafting to code summarization. Version 0.3 added function calling support. Extremely popular in small business integrations due to minimal hardware requirements.</div>
+      <div class="igrid">
+        <div class="icell"><div class="ilbl">Size (Q4)</div><div class="ival hi">4.1 GB</div></div>
+        <div class="icell"><div class="ilbl">Parameters</div><div class="ival">7 Billion</div></div>
+        <div class="icell"><div class="ilbl">Min VRAM</div><div class="ival">8 GB</div></div>
+        <div class="icell"><div class="ilbl">Architecture</div><div class="ival">Sliding Window Attn</div></div>
+      </div>
+      <div class="dh">Notable Deployments</div>
+      <div class="drow"><div class="dpip" style="background:#6B21A8"></div><div><span class="dco">Small Business Tooling</span> — <span class="dctx">Email drafting, report summarization, local customer support chatbots</span></div></div>
+      <div class="drow"><div class="dpip" style="background:#6B21A8"></div><div><span class="dco">Open Interpreter</span> — <span class="dctx">Default local model for natural language computer control workflows</span></div></div>
+      <div class="cfoot"><span class="lbadge lopen">Apache 2.0</span><span class="cdate">Sep 2023 → v0.3 May 2024</span></div>
+    </div>
+
+    <div class="mcard" data-tags="general reasoning" style="--ca:#6B21A8;animation-delay:.32s">
+      <div class="cnum">No. 08</div><div class="cname">Mixtral 8×7B / 8×22B</div>
+      <div class="cauthor">Mistral AI · Dec 2023 / Apr 2024</div>
+      <div class="ctags"><span class="tag tag-general">General</span><span class="tag tag-reasoning">MoE</span></div>
+      <div class="cdiv"></div>
+      <div class="cdesc">Sparse Mixture-of-Experts — activates only 2 of 8 expert sub-networks per token. Massive total parameter count with manageable compute overhead. The 8×22B model rivals top-tier proprietary models under a fully permissive Apache 2.0 license. Excellent multilingual reasoning.</div>
+      <div class="igrid">
+        <div class="icell"><div class="ilbl">8×7B Size (Q4)</div><div class="ival hi">26 GB</div></div>
+        <div class="icell"><div class="ilbl">8×22B Size (Q4)</div><div class="ival">~80 GB</div></div>
+        <div class="icell"><div class="ilbl">Active Params</div><div class="ival">~12.9B / token</div></div>
+        <div class="icell"><div class="ilbl">Architecture</div><div class="ival">Sparse MoE</div></div>
+      </div>
+      <div class="dh">Notable Deployments</div>
+      <div class="drow"><div class="dpip" style="background:#6B21A8"></div><div><span class="dco">Dolphin Fine-tunes</span> — <span class="dctx">Community fine-tunes by Eric Hartford for creative and research use cases</span></div></div>
+      <div class="drow"><div class="dpip" style="background:#6B21A8"></div><div><span class="dco">Enterprise Knowledge Bases</span> — <span class="dctx">Document Q&A and analysis pipelines via LangChain + Ollama integrations</span></div></div>
+      <div class="cfoot"><span class="lbadge lopen">Apache 2.0</span><span class="cdate">Dec 2023 → 8×22B Apr 2024</span></div>
+    </div>
+
+    <div class="mcard" data-tags="general vision" style="--ca:#B5390A;animation-delay:.36s">
+      <div class="cnum">No. 09</div><div class="cname">Gemma 3</div>
+      <div class="cauthor">Google DeepMind · March 2025</div>
+      <div class="ctags"><span class="tag tag-general">General</span><span class="tag tag-vision">Vision</span><span class="tag tag-multilang">140+ Languages</span></div>
+      <div class="cdiv"></div>
+      <div class="cdesc">Google's latest open-weight multimodal family. The 27B model reportedly outperforms Llama 3 405B and DeepSeek-V3 in human preference evaluations. Features QK-norm, Grouped-Query Attention, and an efficient KV cache. Supports over 140 languages natively out of the box.</div>
+      <div class="igrid">
+        <div class="icell"><div class="ilbl">Min Size</div><div class="ival hi">1.9 GB (1B)</div></div>
+        <div class="icell"><div class="ilbl">Max Size</div><div class="ival">67 GB (27B Q8)</div></div>
+        <div class="icell"><div class="ilbl">Context Window</div><div class="ival">128K tokens</div></div>
+        <div class="icell"><div class="ilbl">Sizes</div><div class="ival">1B, 4B, 12B, 27B</div></div>
+      </div>
+      <div class="dh">Notable Deployments</div>
+      <div class="drow"><div class="dpip" style="background:#B5390A"></div><div><span class="dco">Google AI Studio</span> — <span class="dctx">Hosted research access; Gemma 3 used as reference open model for developers</span></div></div>
+      <div class="drow"><div class="dpip" style="background:#B5390A"></div><div><span class="dco">Multimodal Analysis</span> — <span class="dctx">Document and chart understanding at 12B scale on consumer RTX graphics cards</span></div></div>
+      <div class="cfoot"><span class="lbadge lcomm">Gemma Terms of Use</span><span class="cdate">Mar 2025</span></div>
+    </div>
+
+    <div class="mcard" data-tags="reasoning edge" style="--ca:#B45309;animation-delay:.40s">
+      <div class="cnum">No. 10</div><div class="cname">Phi-4</div>
+      <div class="cauthor">Microsoft Research · December 2024</div>
+      <div class="ctags"><span class="tag tag-reasoning">Reasoning</span><span class="tag tag-edge">Compact</span></div>
+      <div class="cdiv"></div>
+      <div class="cdesc">14B parameter model from Microsoft that rivals much larger models on complex STEM reasoning. Phi-4-Reasoning matches frontier math performance at 14B scale — ideal for constrained hardware requiring deep analytical capability without giving up accuracy for speed.</div>
+      <div class="igrid">
+        <div class="icell"><div class="ilbl">Size (Q4)</div><div class="ival hi">8.9 GB</div></div>
+        <div class="icell"><div class="ilbl">Parameters</div><div class="ival">14 Billion</div></div>
+        <div class="icell"><div class="ilbl">Min VRAM</div><div class="ival">10 GB</div></div>
+        <div class="icell"><div class="ilbl">Specialty</div><div class="ival">Math / STEM</div></div>
+      </div>
+      <div class="dh">Notable Deployments</div>
+      <div class="drow"><div class="dpip" style="background:#B45309"></div><div><span class="dco">Azure AI Studio</span> — <span class="dctx">Microsoft-hosted managed endpoint for enterprise STEM reasoning tasks</span></div></div>
+      <div class="drow"><div class="dpip" style="background:#B45309"></div><div><span class="dco">QodeAssist (Qt Creator)</span> — <span class="dctx">AI coding assistant plugin using local Phi-4 via Ollama backend</span></div></div>
+      <div class="cfoot"><span class="lbadge lopen">MIT License</span><span class="cdate">Dec 2024</span></div>
+    </div>
+
+    <div class="mcard" data-tags="edge general" style="--ca:#B45309;animation-delay:.44s">
+      <div class="cnum">No. 11</div><div class="cname">Phi-3 / Phi-3.5</div>
+      <div class="cauthor">Microsoft Research · April 2024</div>
+      <div class="ctags"><span class="tag tag-edge">Edge</span><span class="tag tag-general">General</span></div>
+      <div class="cdiv"></div>
+      <div class="cdesc">Punches well above its 3.8B weight class. Matches much larger models on MMLU benchmarks. Designed for phones and embedded systems. Phi-3.5-mini extends context to 128K. Used in offline agricultural field tools and developer CLI copilots on severely constrained hardware.</div>
+      <div class="igrid">
+        <div class="icell"><div class="ilbl">Min Size</div><div class="ival hi">2.2 GB (3.8B)</div></div>
+        <div class="icell"><div class="ilbl">Max Size</div><div class="ival">7.9 GB (14B)</div></div>
+        <div class="icell"><div class="ilbl">Variants</div><div class="ival">Mini, Small, Med</div></div>
+        <div class="icell"><div class="ilbl">Min RAM</div><div class="ival">4 GB RAM</div></div>
+      </div>
+      <div class="dh">Notable Deployments</div>
+      <div class="drow"><div class="dpip" style="background:#B45309"></div><div><span class="dco">Agricultural Field Apps</span> — <span class="dctx">On-device crop advice and field diagnostics with no internet required</span></div></div>
+      <div class="drow"><div class="dpip" style="background:#B45309"></div><div><span class="dco">AI Toolkit for VS Code</span> — <span class="dctx">Microsoft's official extension uses Phi-3 as default local code assistance model</span></div></div>
+      <div class="cfoot"><span class="lbadge lopen">MIT License</span><span class="cdate">Apr 2024 → Phi-3.5 Aug 2024</span></div>
+    </div>
+
+    <div class="mcard" data-tags="general reasoning multilang" style="--ca:#9F1239;animation-delay:.48s">
+      <div class="cnum">No. 12</div><div class="cname">Qwen3</div>
+      <div class="cauthor">Alibaba Qwen Team · April 2025</div>
+      <div class="ctags"><span class="tag tag-general">General</span><span class="tag tag-reasoning">Reasoning</span><span class="tag tag-multilang">Multilingual</span></div>
+      <div class="cdiv"></div>
+      <div class="cdesc">Latest Qwen generation with dense and MoE variants. Qwen3 offers up to 256K tokens — the longest context window on Ollama. The 235B MoE is the flagship. Excellent for multi-step agentic tasks, tool use, long-document analysis, and broad multilingual coverage.</div>
+      <div class="igrid">
+        <div class="icell"><div class="ilbl">Min Size</div><div class="ival hi">~500 MB (0.6B)</div></div>
+        <div class="icell"><div class="ilbl">Max Size</div><div class="ival">~140 GB (235B)</div></div>
+        <div class="icell"><div class="ilbl">Context Window</div><div class="ival">256K tokens</div></div>
+        <div class="icell"><div class="ilbl">Architecture</div><div class="ival">Dense + MoE</div></div>
+      </div>
+      <div class="dh">Notable Deployments</div>
+      <div class="drow"><div class="dpip" style="background:#9F1239"></div><div><span class="dco">Enterprise Long-Doc Q&A</span> — <span class="dctx">Contract review and summarization via LangChain + Ollama integrations</span></div></div>
+      <div class="drow"><div class="dpip" style="background:#9F1239"></div><div><span class="dco">Qwen3-Coder-Next</span> — <span class="dctx">Coding-focused variant optimized for agentic local development workflows</span></div></div>
+      <div class="cfoot"><span class="lbadge lopen">Apache 2.0 (most variants)</span><span class="cdate">Apr 2025</span></div>
+    </div>
+
+    <div class="mcard" data-tags="general multilang code" style="--ca:#9F1239;animation-delay:.52s">
+      <div class="cnum">No. 13</div><div class="cname">Qwen2.5</div>
+      <div class="cauthor">Alibaba Qwen Team · September 2024</div>
+      <div class="ctags"><span class="tag tag-multilang">Multilingual</span><span class="tag tag-code">Code Variant</span><span class="tag tag-general">General</span></div>
+      <div class="cdiv"></div>
+      <div class="cdesc">Alibaba's mature, well-quantized general family. Pretrained on 18 trillion tokens. Sweet spots are 7B (fast) and 14B (balanced reasoning). Includes Qwen2.5-Coder with support for 300+ programming languages. One of the broadest multilingual models available locally.</div>
+      <div class="igrid">
+        <div class="icell"><div class="ilbl">Min Size</div><div class="ival hi">~400 MB (0.5B)</div></div>
+        <div class="icell"><div class="ilbl">Max Size</div><div class="ival">~44 GB (72B)</div></div>
+        <div class="icell"><div class="ilbl">Context Window</div><div class="ival">128K tokens</div></div>
+        <div class="icell"><div class="ilbl">Training Tokens</div><div class="ival">18 Trillion</div></div>
+      </div>
+      <div class="dh">Notable Deployments</div>
+      <div class="drow"><div class="dpip" style="background:#9F1239"></div><div><span class="dco">Home Lab AI Stacks</span> — <span class="dctx">Q4 / Q5 / Q8 builds popular on consumer GPUs in self-hosted server setups</span></div></div>
+      <div class="drow"><div class="dpip" style="background:#9F1239"></div><div><span class="dco">DevOps Scripting</span> — <span class="dctx">Qwen2.5-Coder for code generation, review, and shell scripting automation</span></div></div>
+      <div class="cfoot"><span class="lbadge lopen">Apache 2.0 (≤72B)</span><span class="cdate">Sep 2024</span></div>
+    </div>
+
+    <div class="mcard" data-tags="code" style="--ca:#6B21A8;animation-delay:.56s">
+      <div class="cnum">No. 14</div><div class="cname">CodeLlama</div>
+      <div class="cauthor">Meta AI · August 2023</div>
+      <div class="ctags"><span class="tag tag-code">Code</span><span class="tag tag-general">Fill-in-Middle</span></div>
+      <div class="cdiv"></div>
+      <div class="cdesc">Meta's code-specialized Llama 2 derivative. Supports fill-in-the-middle (FIM) for inline code completion via the &lt;FILL_ME&gt; token. Available in Python-specific and instruction-tuned variants. Important: FIM support is limited to the 7B and 13B base model sizes only.</div>
+      <div class="igrid">
+        <div class="icell"><div class="ilbl">Min Size</div><div class="ival hi">3.8 GB (7B)</div></div>
+        <div class="icell"><div class="ilbl">Max Size</div><div class="ival">38 GB (70B)</div></div>
+        <div class="icell"><div class="ilbl">Sizes</div><div class="ival">7B, 13B, 34B, 70B</div></div>
+        <div class="icell"><div class="ilbl">FIM Support</div><div class="ival">7B & 13B only</div></div>
+      </div>
+      <div class="dh">Notable Deployments</div>
+      <div class="drow"><div class="dpip" style="background:#6B21A8"></div><div><span class="dco">Continue (VS Code)</span> — <span class="dctx">Open-source AI coding assistant using CodeLlama for tab-completion</span></div></div>
+      <div class="drow"><div class="dpip" style="background:#6B21A8"></div><div><span class="dco">Cline (VS Code)</span> — <span class="dctx">Multi-file repository coding agent; CodeLlama 34B for local use cases</span></div></div>
+      <div class="cfoot"><span class="lbadge lcomm">Llama 2 Community License</span><span class="cdate">Aug 2023</span></div>
+    </div>
+
+    <div class="mcard" data-tags="embed" style="--ca:#B45309;animation-delay:.60s">
+      <div class="cnum">No. 15</div><div class="cname">nomic-embed-text</div>
+      <div class="cauthor">Nomic AI · 2024</div>
+      <div class="ctags"><span class="tag tag-embed">Embedding</span></div>
+      <div class="cdiv"></div>
+      <div class="cdesc">High-performing open embedding model with an unusually large 8K token context window. Converts text to 768-dimensional vectors for semantic search, RAG pipelines, and similarity matching. One of the only fully open embedding models that genuinely competes with proprietary APIs.</div>
+      <div class="igrid">
+        <div class="icell"><div class="ilbl">Size</div><div class="ival hi">~274 MB</div></div>
+        <div class="icell"><div class="ilbl">Context Window</div><div class="ival">8K tokens</div></div>
+        <div class="icell"><div class="ilbl">Output Dimensions</div><div class="ival">768</div></div>
+        <div class="icell"><div class="ilbl">Version</div><div class="ival">v1.5</div></div>
+      </div>
+      <div class="dh">Notable Deployments</div>
+      <div class="drow"><div class="dpip" style="background:#B45309"></div><div><span class="dco">RAG Pipelines</span> — <span class="dctx">Local vector stores (Chroma, pgvector, chromem-go) for private document Q&A</span></div></div>
+      <div class="drow"><div class="dpip" style="background:#B45309"></div><div><span class="dco">Semantic Kernel / LangChain</span> — <span class="dctx">Default local embedding model in many open-source agent frameworks</span></div></div>
+      <div class="cfoot"><span class="lbadge lopen">Apache 2.0</span><span class="cdate">2024</span></div>
+    </div>
+
+    <div class="mcard" data-tags="vision" style="--ca:#B5390A;animation-delay:.64s">
+      <div class="cnum">No. 16</div><div class="cname">LLaVA</div>
+      <div class="cauthor">Haotian Liu et al., UW-Madison · April 2023</div>
+      <div class="ctags"><span class="tag tag-vision">Vision</span><span class="tag tag-general">General</span></div>
+      <div class="cdiv"></div>
+      <div class="cdesc">The original open-source vision-language model for local deployment. Connects a CLIP visual encoder to Llama or Mistral via a lightweight projection layer. LLaVA 1.6 (Mistral-based) is the most popular variant. The easiest entry point to multimodal AI in a home lab.</div>
+      <div class="igrid">
+        <div class="icell"><div class="ilbl">Min Size</div><div class="ival hi">4.5 GB (7B)</div></div>
+        <div class="icell"><div class="ilbl">Max Size</div><div class="ival">20 GB (34B)</div></div>
+        <div class="icell"><div class="ilbl">Vision Encoder</div><div class="ival">CLIP ViT-L</div></div>
+        <div class="icell"><div class="ilbl">Latest Version</div><div class="ival">v1.6 (Jan 2024)</div></div>
+      </div>
+      <div class="dh">Notable Deployments</div>
+      <div class="drow"><div class="dpip" style="background:#B5390A"></div><div><span class="dco">Home Lab Vision</span> — <span class="dctx">Most popular multimodal model for self-hosted image description and analysis</span></div></div>
+      <div class="drow"><div class="dpip" style="background:#B5390A"></div><div><span class="dco">Open WebUI</span> — <span class="dctx">Integrated as the default vision option in popular Ollama browser front-ends</span></div></div>
+      <div class="cfoot"><span class="lbadge lres">LLaVA License (research)</span><span class="cdate">Apr 2023 → v1.6 Jan 2024</span></div>
+    </div>
+
+  </div>
+
+  <div class="sh">
+    <span class="snum">§ 03</span><span class="stitle">Verify Current Availability &amp; Latest Releases</span><div class="srule"></div>
+  </div>
+
+  <div class="vbox">
+    <div class="vhead"><span>📡</span> How to Check Model Availability, Sizes &amp; Updates</div>
+    <div class="vbody">
+      <p class="vintro">All data above reflects best publicly available information as of March 2026. Model sizes vary significantly by quantization level (Q4_K_M, Q5_K_M, Q8_0, F16) — the same model can differ 2–4× in disk size depending on the specific tag pulled. Always verify current availability using the commands and sources below.</p>
+      <div class="cmdblock"><span class="cc"># List all locally installed models with their exact sizes</span>
+<span class="ck">ollama list</span>
+
+<span class="cc"># Pull a specific model and quantization variant</span>
+<span class="ck">ollama pull</span> <span class="cs">llama3.1:8b</span>
+<span class="ck">ollama pull</span> <span class="cs">deepseek-r1:7b</span>
+<span class="ck">ollama pull</span> <span class="cs">qwen3:14b</span>
+
+<span class="cc"># Inspect a model's metadata and Modelfile before using it</span>
+<span class="ck">ollama show</span> <span class="cs">llama3.3</span> --modelfile
+
+<span class="cc"># Query the registry API for all available model names</span>
+<span class="ck">curl</span> https://ollama.com/api/tags | jq <span class="cs">'.models[].name'</span>
+
+<span class="cc"># Update all installed models to their latest published versions</span>
+<span class="ck">ollama list</span> | awk <span class="cs">'NR>1{print $1}'</span> | xargs -I{} <span class="ck">ollama pull</span> {}</div>
+      <div class="vnotes">
+        <div class="ncard">
+          <div class="nth">Official Sources</div>
+          <ul>
+            <li>Full model library → <a href="https://ollama.com/library" target="_blank">ollama.com/library</a></li>
+            <li>Release notes &amp; changelog → <a href="https://github.com/ollama/ollama/releases" target="_blank">github.com/ollama/ollama/releases</a></li>
+            <li>Model quantization tags → <a href="https://ollama.com/library/llama3.1" target="_blank">ollama.com/library/[model-name]</a></li>
+            <li>Community search → <a href="https://ollama.com/search" target="_blank">ollama.com/search</a></li>
+          </ul>
+        </div>
+        <div class="ncard">
+          <div class="nth warn">Not Publicly Documented</div>
+          <ul>
+            <li>Exact pull / download counts for most models</li>
+            <li>Precise release dates for community fine-tunes</li>
+            <li>Hardware-specific performance benchmarks per model</li>
+            <li>Commercial deployment details (not self-reported)</li>
+            <li>Quantization quality tradeoff specifics per family</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let af='all';
+function sf(t,b){af=t;document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('active'));b.classList.add('active');fc();}
+function fc(){
+  const q=document.getElementById('si').value.toLowerCase().trim();
+  const cards=document.querySelectorAll('.mcard');
+  let n=0;
+  cards.forEach(c=>{
+    const ok=(af==='all'||c.dataset.tags.includes(af))&&(!q||c.innerText.toLowerCase().includes(q));
+    c.classList.toggle('hidden',!ok);
+    if(ok)n++;
+  });
+  document.getElementById('cl').textContent=n===16?'Showing all 16 models':`Showing ${n} of 16 models`;
+}
+</script>
+</body>
+</html>
