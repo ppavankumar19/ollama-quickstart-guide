@@ -1,0 +1,31 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "9175761a31e7",
+  "session_id": "ff05044e-3835-4577-a540-af69d9d0d04f",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-09T01:27:05.558087472Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "index.html",
+    "ollamacatalog.html"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "c17874bbf774",
+  "token_usage": {
+    "input_tokens": 1124,
+    "cache_creation_tokens": 113199,
+    "cache_read_tokens": 803799,
+    "output_tokens": 6613,
+    "api_call_count": 21
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-09T01:27:05.005117701Z",
+    "agent_lines": 12,
+    "human_added": 598,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 610,
+    "agent_percentage": 1.9672131147540985
+  }
+}

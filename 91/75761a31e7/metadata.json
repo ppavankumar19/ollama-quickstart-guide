@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "9175761a31e7",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "index.html",
+    "ollamacatalog.html"
+  ],
+  "sessions": [
+    {
+      "metadata": "/91/75761a31e7/0/metadata.json",
+      "transcript": "/91/75761a31e7/0/full.jsonl",
+      "context": "/91/75761a31e7/0/context.md",
+      "content_hash": "/91/75761a31e7/0/content_hash.txt",
+      "prompt": "/91/75761a31e7/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 1124,
+    "cache_creation_tokens": 113199,
+    "cache_read_tokens": 803799,
+    "output_tokens": 6613,
+    "api_call_count": 21
+  }
+}
